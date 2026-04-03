@@ -1,28 +1,47 @@
 :root {
-    --color-bg: #7C6C77; /* Dusty Mauve (page background) */
-    --color-header: #0D0630; 
+    --color-bg: #7C6C77;        /* Dusty Mauve (page background) */
+    --color-header: #0D0630;    /* Dark Amethyst (header / text) */
+    --color-card: #82AEB1;      /* Teal (cards) */
+    --color-accent: #E3B505;    /* Saffron (buttons / highlights) */
+    --color-hover: #A7C7E7;     /* Sky Blue (hover effects) */
+    --color-text: #0D0630;      /* Main text */
+    --color-light: #A7C7E7;     /* Secondary background */
 }
 
 /* General page styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: var(--color-bg);
     margin: 0;
     padding: 0;
+    color: var(--color-text);
 }
 
 /* Header section styling */
 header {
-    background: #333;
-    color: #fff;
+    background-color: var(--color-bg);
+    color: var(--color-accent);
     padding: 10px 0;
     text-align: center;
 }
 
 /* Styling for team logo image */
 .team-logo {
-    width: 150px; /* Adjust the size as needed */
+    width: 350px; /* Adjust the size as needed */
     margin-top: 10px;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    margin: 10px 0;
+    border: 3px solid var(--color-accent)
+}
+
+.avatar:hover {
+    transform: scale(1.05);
+    transition: 0.2s;
 }
 
 /* Menu button styling */
@@ -31,17 +50,18 @@ header nav {
 }
 
 header nav button {
-    background: #007BFF;
-    color: white;
+    background: var(--color-card);
+    color: var(--color-text);
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
     margin: 0 5px;
+    transition: 0.2s;
 }
 
 header nav button:hover {
-    background: #0056b3;
+    background: var(--color-hover);
 }
 
 /* Flex container for team bios and vision sections */
@@ -55,14 +75,14 @@ header nav button:hover {
 
 /* Card styling for individual team bios */
 .card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background: var(--color-card);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     margin: 10px;
     padding: 20px;
     flex: 1 1 calc(30% - 40px);
     text-align: center;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
@@ -75,9 +95,13 @@ h2 {
 
 /* Initially hide bio details */
 .bio {
+    background: var(--color-accent);
+    color: var(--color-header);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
     display: none;
-    margin-top: 10px;
-    color: #555;
 }
 
 /* Button styling */
@@ -91,5 +115,23 @@ button {
 }
 
 button:hover {
-    background: #0056b3;
+    background: var(--color-hover);
+}
+
+/* Moodboard Section */
+.mood-section {
+    background: var(--color-light);
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Divider */
+.divider {
+    text-align: center;
+    margin: 10px 0;
+    color: var(--color-header);
+    letter-spacing: 6px;
+    font-weight: bold;
+    font-size: 14px;
 }
