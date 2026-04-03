@@ -135,3 +135,40 @@ button:hover {
     font-weight: bold;
     font-size: 14px;
 }
+
+.vision-card {
+    background: var(--color-card);
+    color: var(--color-text);
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    line-height: 1.6;
+}
+
+.vision-card h2 {
+    color: var(--color-header);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.vision-card h3 {
+    color: var(--color-header);
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.vision-card p {
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.vision-card ul {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.vision-card li {
+    margin-bottom: 8px;
+}
