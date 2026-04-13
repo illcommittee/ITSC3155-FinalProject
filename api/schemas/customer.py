@@ -4,21 +4,17 @@ from pydantic import BaseModel
 from .order_details import OrderDetail
 
 
-
-class OrderBase(BaseModel):
+class CustomerBase(BaseModel):
     order_num: int
     customer_name: str
     order_date: datetime # BUGSTRING
-    tracking_num: int
-    order_status: bool
-    total_price: float
-    order_details: str
-
-
+    email: str
+    phone_num: int
+    address: str
 
 # FIX BELOW
 
-class OrderCreate(OrderBase):
+class CustomerCreate(CustomerBase):
     pass
 
 

@@ -4,9 +4,15 @@ from pydantic import BaseModel
 
 
 class ResourceBase(BaseModel):
-    item: str
-    amount: int
+    order_date: datetime # BUGSTRING
+    dishes: str
+    ingredients: str
+    resource_amount: dict
+    menu_price: dict
+    calories: dict
+    allergens: dict
 
+# FIX BELOW
 
 class ResourceCreate(ResourceBase):
     pass
