@@ -7,7 +7,6 @@ from .order_details import OrderDetail
 class CustomerBase(BaseModel):
     order_num: int
     customer_name: str
-    order_date: datetime # BUGSTRING
     email: str
     phone_num: int
     address: str
@@ -18,15 +17,16 @@ class CustomerCreate(CustomerBase):
     pass
 
 
-class OrderUpdate(BaseModel):
+class CustomerUpdate(BaseModel):
     customer_name: Optional[str] = None
+    email: Optional[str] = None
+    phone_num: Optional[str] = None
     description: Optional[str] = None
+    address: Optional[str] = None
 
 
-class Order(OrderBase):
+class Customer(CustomerBase):
     id: int
-    order_date: Optional[datetime] = None
-    order_details: list[OrderDetail] = None
 
-    class ConfigDict:
+    class configDict:
         from_attributes = True
