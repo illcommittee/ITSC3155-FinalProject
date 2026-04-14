@@ -1,7 +1,5 @@
-from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel
-from .order_details import OrderDetail
 
 
 class CustomerBase(BaseModel):
@@ -11,8 +9,6 @@ class CustomerBase(BaseModel):
     phone_num: int
     address: str
 
-# FIX BELOW
-
 class CustomerCreate(CustomerBase):
     pass
 
@@ -20,13 +16,12 @@ class CustomerCreate(CustomerBase):
 class CustomerUpdate(BaseModel):
     customer_name: Optional[str] = None
     email: Optional[str] = None
-    phone_num: Optional[str] = None
-    description: Optional[str] = None
+    phone_num: Optional[int] = None
     address: Optional[str] = None
 
 
 class Customer(CustomerBase):
     id: int
 
-    class configDict:
+    class ConfigDict:
         from_attributes = True
