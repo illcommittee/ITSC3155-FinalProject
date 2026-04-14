@@ -11,7 +11,7 @@ class Resource(Base):
     dishes = Column(String(100), nullable=False)
     ingredients = Column(String(200), nullable=False)
     resource_amount = Column(String(50), nullable=False)
-    unit = Column(String(20), nullable=False)
     menu_price = Column(Float, nullable=False)
     calories = Column(Integer, nullable=False)
     allergens = Column(String(200), nullable=True)
+    order_date = Column(DATETIME, default=datetime.now, nullable=False)
