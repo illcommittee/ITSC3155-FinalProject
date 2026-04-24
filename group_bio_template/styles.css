@@ -17,6 +17,24 @@ body {
     color: var(--color-text);
 }
 
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--color-card);
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-links a {
+  padding: 5px;
+}
+
 /* Header section styling */
 header {
     background-color: var(--color-bg);
