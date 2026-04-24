@@ -13,19 +13,39 @@ def db_session(mocker):
     return mocker.Mock()
 
 
-def test_create_order(db_session):
-    # Create a sample order
-    order_data = {
-        "customer_name": "John Doe",
-        "description": "Test order"
-    }
+def test_create_multiple_orders(db_session):
+    # List of dummy orders
+    orders_data = [
+        {
+            "customer_name": "John Doe",
+            "description": "Test Order 1",
+            "tracking_number": "1"
+        },
+        {
+            "customer_name": "Jane Smith",
+            "description": "Test Order 2",
+            "tracking_number": "2"
+        },
+        {
+            "customer_name": "Alice Johnson",
+            "description": "Test Order 3",
+            "tracking_number": "3"
+        }
+    ]
 
-    order_object = model.Order(**order_data)
+    created_orders = []
 
-    # Call the create function
-    created_order = controller.create(db_session, order_object)
+    # Create orders
+    for order_data in orders_data:
+        order_object = model.Order(**order_data)
+        created = controller.create(db_session, order_object)
+        created_orders.append(created)
 
     # Assertions
-    assert created_order is not None
-    assert created_order.customer_name == "John Doe"
-    assert created_order.description == "Test order"
+    assert len(created_orders) == len(orders_data)
+
+    for i, created_order in enumerate(created_orders):
+        assert created_order is not None
+        assert created_order.customer_name == orders_data[i]["customer_name"]
+        assert created_order.description == orders_data[i]["description"]
+        assert created_order.tracking_number == orders_data[i]["tracking_number"]
