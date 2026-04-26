@@ -160,3 +160,6 @@ cython_debug/
 .idea/
 
 .pytest_cache
+
+#SQL DB Config - no pw sharing
+api/dependencies/config.py
