@@ -1,206 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Bio</title>
-    <link rel="icon" type="image/png" href="img/favicon48x48.png">
-    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<header>
-    <h1>Meet Our Team</h1>
-    <!-- Example team logo -->
-    <img src="img/team-logo.png" alt="Team Logo" class="team-logo">
+  <h2>Menu</h2>
+  <div id="menu"></div>
 
-    <!-- Navigation menu to switch between sections -->
-    <nav>
-        <button onclick="showSection('bios')">Team Bios</button>
-        <button onclick="showSection('vision')">Team Vision</button>
-    </nav>
-</header>
+  <h2>Order</h2>
+  <ul id="order-list"></ul>
+  <p id="total">Total: $0.00</p>
 
-<!-- Team bios section (default section) -->
-<div id="bios" class="container">
-    <!-- Each card represents an individual team member -->
-    <div class="card">
-        <h2>Nate Gustafson</h2>
-        <!-- Optional Avatar -->
-        <img src="img/avatar-nate.png" alt="Nate Avatar" class="avatar">
-        <p>Product Owner</p>
-        <button onclick="toggleBio('bio1')">Show Bio</button>
-        <div id="bio1" class="bio">
-            <!--Intro Here-->
-            <p>Nate is the Product Owner focused on building a practical system that improving team communication, and delivering the perfect product.</p>
-            <div class="divider">◆ ◆ ◆</div>
-            <!--Moodboard-->
-            <div class="moodboard">
-                <div class="mood-section">
-                    <h4>◆ Tools</h4>
-                    <ul>
-                        <li>VS Code</li>
-                        <li>Git & GitHub</li>
-                        <li>Python / FastAPI</li>
-                        <li>Linux / Terminal</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="divider">◆ ◆ ◆</div>
-            <div class="mood-section">
-                <h4>◆ My Resources</h4>
-                <a href="https://illcommittee.github.io/coderesource/index.html" target="_blank">
-                    Coding Resource Hub
-                </a>
-            </div>
-            <!--Moodboard End-->
-        </div>
-    </div>
-    <div class="card">
-        <h2>Andy Choo</h2>
-        <img src="img/andychoo.jpeg" alt="Andy's meme photo" class="avatar"/>
-        <p>Scrum Master</p>
-        <button onclick="toggleBio('bio2')">Show Bio</button>
-        <div id="bio2" class="bio">
-            <p>Andy is a full-stack developer with experience in cyber security engineering.</p>
-            <div class="divider">◆ ◆ ◆</div>
-            <!--Moodboard-->
-            <div class="moodboard">
-                <div class="mood-section">
-                    <h4>◆ Tools</h4>
-                    <ul>
-                        <li>JavaScript</li>
-                        <li>React.js</li>
-                        <li>Python</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="divider">◆ ◆ ◆</div>
-            <div class="mood-section">
-                <h4>◆ My Resources</h4>
-                <a href="https://github.com/Andydchoo" target="_blank">Github</a>
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <h2>Jeevan Liu</h2>
-        <!-- Optional Avatar -->
-        <img src="img/avatar-jeevan.jpg" alt="Jeevan Avatar" class="avatar">
-        <p>Software Engineer</p>
-        <button onclick="toggleBio('bio3')">Show Bio</button>
-        <div id="bio3" class="bio">
-            <!--Intro Here-->
-            <p>Jeevan is a software developer, specializing in back-end development.</p>
-            <div class="divider">◆ ◆ ◆</div>
-            <!--Moodboard-->
-            <div class="moodboard">
-                <div class="mood-section">
-                    <h4>◆ Tools</h4>
-                    <ul>
-                        <li>Python</li>
-                        <li>Git/GitHub</li>
-                        <li>Java</li>
-                        <li>C/C++</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="divider">◆ ◆ ◆</div>
-            <div class="mood-section">
-                <h4>◆ My Resources</h4>
-                <a href="https://github.com/JeevanLiu" target="_blank">
-                    Personal GitHub
-                </a>
-            </div>
-            <!--Moodboard End-->
-        </div>
-    </div>
-    <div class="card">
-        <h2>Caimen French</h2>
-        <!-- Optional Avatar -->
-        <img src="img/avatar-caimen.png" alt="Caimen Avatar" class="avatar">
-        <p>Software Engineer</p>
-        <button onclick="toggleBio('bio4')">Show Bio</button>
-        <div id="bio4" class="bio">
-            <!--Intro Here-->
-            <p>I'm Caimen French, pleasure to meet you.</p>
-            <div class="divider">◆ ◆ ◆</div>
-            <!--Moodboard-->
-            <div class="moodboard">
-                <div class="mood-section">
-                    <h4>◆ Tools</h4>
-                    <ul>
-                        <li>Java</li>
-                        <li>GML</li>
-                        <li>Python</li>
-                        <li>C</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="divider">◆ ◆ ◆</div>
-            <div class="mood-section">
-                <h4>◆ My Resources</h4>
-                <a href="https://github.com/cfrench-uncc" target="_blank">
-                    GitHub
-                </a>
-            </div>
-            <!--Moodboard End-->
-        </div>
-    </div>
-    <div class="card">
-        <h2>Andy Nguyen</h2>
-        <img src="img/AndyNAvatar.jpg" alt="Andy's Talking Ben" class="avatar"/>
-        <p>Software Engineer</p>
-        <button onclick="toggleBio('bio5')">Show Bio</button>
-        <div id="bio5" class="bio">
-            <p>Andy Nguyen is a Software Engineer who specializes in FastAPI and Python. He also drinks coffee and loves collaborating with group projects.</p>
-            <div class="divider">◆ ◆ ◆</div>
-            <!--Moodboard-->
-            <div class="moodboard">
-                <div class="mood-section">
-                    <h4>◆ Tools</h4>
-                    <ul>
-                        <li>Talking Ben</li>
-                        <li>Pycharm</li>
-                        <li>X (formerly twitter)</li>
-                        <li>Python</li>
-                        <li>Java (i am brainwashed in Java)</li>
-                    </ul>
-                </div>
-                <div class="divider">◆ ◆ ◆</div>
-                <div class="mood-section">
-                    <h4>◆ My Resources</h4>
-                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Funny Cat Video</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+  <h2>Checkout</h2>
+  <label><input type="radio" name="type" value="takeout" checked> Takeout</label>
+  <label><input type="radio" name="type" value="delivery"> Delivery</label>
+  <br>
+  <input type="text" id="promo" placeholder="Promo code" />
+  <br>
+  <button onclick="placeOrder()">Pay & Submit</button>
+  <p id="msg"></p>
 
-<!-- Team vision/mission statement section (hidden by default) -->
-<div id="vision" class="container" style="display: none;">
-    <div class="vision-card">
-        <h2>Inspector Gadget Fan Club's Mission Statement</h2>
-        <p>
-            We strive to create a community of innovative (mainly chaotic) software engineers dedicated to helping Inspector Gadget (yes, we’re a fan club) save the day!
-            We design, test, and occasionally… break high-tech gadgets to defeat villains.
-            We value teamwork, collaboration, and problem-solving.
-            Every bug we encounter is just a villain in disguise…
-        </p>
-        
-        <div class="divider">◆ ◆ ◆</div>
-
-        <h3>Team Rules:</h3>
-        <ul>
-            <li>Respect everyone in the community</li>
-            <li>Communicate clearly</li>
-            <li>Complete your missions on time</li>
-            <li>Help fellow agents build and debug their gadgets</li>
-            <li>No Dr. Claw-style sabotage allowed</li>
-        </ul>
-    </div>
-</div>
-
-<script src="script.js"></script> <!-- Link to external JavaScript file -->
-
+  <script src="script.js"></script>
 </body>
 </html>

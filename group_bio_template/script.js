@@ -1,33 +1,45 @@
-/**
- * Toggles the display of an individual team member's bio
- * @param {string} bioId - The ID of the bio section to show or hide
- */
-function toggleBio(bioId) {
-    const bio = document.getElementById(bioId);
-    // Toggle between showing and hiding the bio section
-    if (bio.style.display === "none" || bio.style.display === "") {
-        bio.style.display = "block";
-    } else {
-        bio.style.display = "none";
-    }
+let order = [];
+
+
+menu.forEach(item => {
+  const btn = document.createElement("button");
+  btn.textContent = `${item.name} $${item.price}`;
+  btn.onclick = () => addItem(item);
+  document.getElementById("menu").appendChild(btn);
+});
+
+function addItem(item) {
+  const found = order.find(i => i.id === item.id);
+  if (found) found.qty++;
+  else order.push({ ...item, qty: 1 });
+  renderOrder();
 }
 
-/**
- * Shows the specified section ('bios' or 'vision') and hides the other
- * @param {string} sectionId - The ID of the section to display
- */
-function showSection(sectionId) {
-    const biosSection = document.getElementById("bios");
-    const visionSection = document.getElementById("vision");
+function renderOrder() {
+  const list = document.getElementById("order-list");
+  list.innerHTML = "";
+  let total = 0;
+  order.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = `${item.name} x${item.qty}`;
+    list.appendChild(li);
+    total += item.price * item.qty;
+  });
+  document.getElementById("total").textContent = `Total: $${total.toFixed(2)}`;
+}
 
-    // Display the bios section and hide the vision section
-    if (sectionId === "bios") {
-        biosSection.style.display = "flex";
-        visionSection.style.display = "none";
-    }
-    // Display the vision section and hide the bios section
-    else if (sectionId === "vision") {
-        biosSection.style.display = "none";
-        visionSection.style.display = "block";
-    }
+async function placeOrder() {
+  const type = document.querySelector('input[name="type"]:checked').value;
+  const promo = document.getElementById("promo").value;
+
+  const res = await fetch("http://localhost:5000/orders", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ items: order, type, promo })
+  });
+
+  const data = await res.json();
+  document.getElementById("msg").textContent = `Order #${data.orderId} placed!`;
+  order = [];
+  renderOrder();
 }
