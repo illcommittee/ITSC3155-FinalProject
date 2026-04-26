@@ -4,21 +4,33 @@ from pydantic import BaseModel
 
 
 class ResourceBase(BaseModel):
-    item: str
-    amount: int
-
+    #Removed "order_date: datetime" as it's located in /models/resources.py
+    dishes: str
+    ingredients: str
+    resource_amount: str
+    menu_price: float
+    calories: int
+    allergens: Optional[str] = None
 
 class ResourceCreate(ResourceBase):
     pass
 
 
 class ResourceUpdate(BaseModel):
-    item: Optional[str] = None
-    amount: Optional[int] = None
+    dishes: Optional[str] = None
+    ingredients: Optional[str] = None
+    resource_amount: Optional[str] = None
+    menu_price: Optional[float] = None
+    calories: Optional[int] = None
+    allergens: Optional[str] = None
 
 
 class Resource(ResourceBase):
     id: int
+    order_date: datetime
+
+    class ConfigDict:
+        from_attributes = True
 
     class ConfigDict:
         from_attributes = True
