@@ -1,25 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <title>Order Display</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <h2>Menu</h2>
-  <div id="menu"></div>
+  <!-- Step 1: Menu -->
+  <section id="menu-section">
+    <h2>Menu</h2>
+    <div id="menu-grid"></div>
+  </section>
 
-  <h2>Order</h2>
-  <ul id="order-list"></ul>
-  <p id="total">Total: $0.00</p>
+  <!-- Step 2: Current Order -->
+  <section id="order-display">
+    <h2>Current Order</h2>
+    <ul id="order-list"></ul>
+    <p id="order-total">Total: $0.00</p>
+    <button id="checkout-btn">Checkout</button>
+  </section>
 
-  <h2>Checkout</h2>
-  <label><input type="radio" name="type" value="takeout" checked> Takeout</label>
-  <label><input type="radio" name="type" value="delivery"> Delivery</label>
-  <br>
-  <input type="text" id="promo" placeholder="Promo code" />
-  <br>
-  <button onclick="placeOrder()">Pay & Submit</button>
-  <p id="msg"></p>
+  <!-- Step 3: Checkout -->
+  <section id="checkout-section" class="hidden">
+    <h2>Checkout</h2>
+
+    <label>Order Type</label>
+    <div id="order-type">
+      <label><input type="radio" name="type" value="takeout" checked /> Takeout</label>
+      <label><input type="radio" name="type" value="delivery" /> Delivery</label>
+    </div>
+
+    <label for="promo">Promo Code</label>
+    <input type="text" id="promo" placeholder="Enter code (optional)" />
+    <button id="apply-promo">Apply</button>
+    <p id="promo-msg"></p>
+
+    <p id="checkout-total"></p>
+    <button id="pay-btn">Pay & Place Order</button>
+    <p id="order-status"></p>
+  </section>
 
   <script src="script.js"></script>
 </body>
