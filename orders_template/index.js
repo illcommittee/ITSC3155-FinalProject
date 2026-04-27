@@ -31,3 +31,16 @@ function showSection(sectionId) {
     visionSection.style.display = "block";
   }
 }
+
+/**
+ * Gets all orders and displays
+ *
+ */
+
+async function allOrders() {
+  const response = await fetch("/api/orders");
+  document.getElementById("all-orders").textContent = "No orders to display.";
+  const all_order_info = await response.json();
+  const text = JSON.stringify(all_order_info, null, 2);
+  document.getElementById("all-orders").textContent = text;
+}

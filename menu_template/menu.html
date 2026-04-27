@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="icon" type="image/png" href="img/favicon48x48.png">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>Order Display</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
+  <!-- Navbar -->
   <nav>
     <div class="navbar">
       <h2 class="logo">Inspector Gadget's Restaurant</h2>
@@ -16,34 +16,46 @@
         <a href="../menu_template/menu.html">Menu</a>
         <a href="../cart_template/cart.html">Cart</a>
         <a href="../group_bio_template\index.html">About</a>
+        <a href="../group_bio_template\index.html">Orders</a>
         <a href="../login_template/login.html">Login/Signup</a>
       </ul>
     </div>
   </nav>
 
-  <div class="container">
-    <div class="card">
-        <h2>Menu Item</h2>
-        <img src="../group_bio_template/img/andychoo.jpeg" alt="food photo" class="avatar"/>
-        <button onclick="toggleBio('bio2')">Show Description</button>
-        <div id="bio2" class="bio">
-            <p>Ingredients: apples, sardines, pickles, beets</p>
-        </div>
-    </div>
-  </div>
+  <!-- Step 1: Menu -->
+  <section id="menu-section">
+    <h2>Menu</h2>
+    <div id="menu-grid"></div>
+  </section>
 
-  <!-- Displays All Current Orders -->
-  <div class="container">
-    <div class="card">
-        <h2>Order Details</h2>
-        <img src="../group_bio_template/img/avatar-jeevan.jpg" alt="food photo" class="avatar"/>
-        <button onclick="toggleBio('bio3'); allOrders()">Show All Orders</button>
-        <div id="bio3" class="bio">
-            <p id="all-orders"></p>
-        </div>
-    </div>
-  </div>
+  <!-- Step 2: Current Order -->
+  <section id="order-display">
+    <h2>Current Order</h2>
+    <ul id="order-list"></ul>
+    <p id="order-total">Total: $0.00</p>
+    <button id="checkout-btn">Checkout</button>
+  </section>
 
-<script src="script.js"></script> <!-- Link to external JavaScript file -->
+  <!-- Step 3: Checkout -->
+  <section id="checkout-section" class="hidden">
+    <h2>Checkout</h2>
+
+    <label>Order Type</label>
+    <div id="order-type">
+      <label><input type="radio" name="type" value="takeout" checked /> Takeout</label>
+      <label><input type="radio" name="type" value="delivery" /> Delivery</label>
+    </div>
+
+    <label for="promo">Promo Code</label>
+    <input type="text" id="promo" placeholder="Enter code (optional)" />
+    <button id="apply-promo">Apply</button>
+    <p id="promo-msg"></p>
+
+    <p id="checkout-total"></p>
+    <button id="pay-btn">Pay & Place Order</button>
+    <p id="order-status"></p>
+  </section>
+
+  <script src="script.js"></script>
 </body>
 </html>
