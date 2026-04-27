@@ -1,75 +1,58 @@
 const API_URL = "http://127.0.0.1:8000";
 
-const message = document.getElementById("message");
-
-// Create account
 document
   .getElementById("signup-form")
   .addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const username = document.getElementById("signup-username").value;
-    const password = document.getElementById("signup-password").value;
+    const customerData = {
+      order_num: 0,
+      customer_name: document.getElementById("customer-name").value,
+      email: document.getElementById("signup-email").value,
+      phone_num: Number(document.getElementById("phone-num").value),
+      address: document.getElementById("address").value,
+    };
 
-    try {
-      const response = await fetch(`${API_URL}/users`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        }),
-      });
+    const response = await fetch(`${API_URL}/customer/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(customerData),
+    });
 
-      if (!response.ok) {
-        throw new Error("Could not create account");
-      }
-
-      message.textContent = "Account created successfully!";
-    } catch (error) {
-      message.textContent = "Error creating account.";
-      console.error(error);
+    if (response.ok) {
+      alert("Account created!");
+    } else {
+      alert("Could not create account.");
     }
   });
 
-// Login
 document
   .getElementById("login-form")
   .addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const username = document.getElementById("login-username").value;
-    const password = document.getElementById("login-password").value;
+    const email = document.getElementById("login-email").value;
 
-    try {
-      const response = await fetch(`${API_URL}/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        }),
-      });
+    const response = await fetch(`${API_URL}/customer/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+      }),
+    });
 
-      if (!response.ok) {
-        throw new Error("Invalid login");
-      }
+    if (response.ok) {
+      const customer = await response.json();
 
-      const data = await response.json();
+      localStorage.setItem("customer", JSON.stringify(customer));
 
-      message.textContent = "Login successful!";
-
-      // Save user info or token if your API returns one
-      localStorage.setItem("user", JSON.stringify(data));
-
-      // Redirect after login
-      window.location.href = "index.html";
-    } catch (error) {
-      message.textContent = "Invalid username or password.";
-      console.error(error);
+      alert("Login successful!");
+      window.location.href = "../menu_template/menu.html";
+    } else {
+      alert("No account found with that email.");
     }
   });

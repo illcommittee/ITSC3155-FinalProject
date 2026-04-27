@@ -1,0 +1,36 @@
+:root {
+  --color-bg: #7c6c77; /* Dusty Mauve (page background) */
+  --color-header: #0d0630; /* Dark Amethyst (header / text) */
+  --color-card: #82aeb1; /* Teal (cards) */
+  --color-accent: #e3b505; /* Saffron (buttons / highlights) */
+  --color-hover: #a7c7e7; /* Sky Blue (hover effects) */
+  --color-text: #0d0630; /* Main text */
+  --color-light: #a7c7e7; /* Secondary background */
+}
+
+/* General page styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--color-bg);
+  margin: 0;
+  padding: 0;
+  color: var(--color-text);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--color-card);
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-links a {
+  padding: 5px;
+}

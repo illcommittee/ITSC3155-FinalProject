@@ -1,20 +1,20 @@
 :root {
-    --color-bg: #7C6C77;        /* Dusty Mauve (page background) */
-    --color-header: #0D0630;    /* Dark Amethyst (header / text) */
-    --color-card: #82AEB1;      /* Teal (cards) */
-    --color-accent: #E3B505;    /* Saffron (buttons / highlights) */
-    --color-hover: #A7C7E7;     /* Sky Blue (hover effects) */
-    --color-text: #0D0630;      /* Main text */
-    --color-light: #A7C7E7;     /* Secondary background */
+  --color-bg: #7c6c77; /* Dusty Mauve (page background) */
+  --color-header: #0d0630; /* Dark Amethyst (header / text) */
+  --color-card: #82aeb1; /* Teal (cards) */
+  --color-accent: #e3b505; /* Saffron (buttons / highlights) */
+  --color-hover: #a7c7e7; /* Sky Blue (hover effects) */
+  --color-text: #0d0630; /* Main text */
+  --color-light: #a7c7e7; /* Secondary background */
 }
 
 /* General page styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: var(--color-bg);
-    margin: 0;
-    padding: 0;
-    color: var(--color-text);
+  font-family: Arial, sans-serif;
+  background-color: var(--color-bg);
+  margin: 0;
+  padding: 0;
+  color: var(--color-text);
 }
 
 .navbar {
@@ -35,64 +35,131 @@ body {
   padding: 5px;
 }
 
-.container {
-    width: 80%;
-    margin: 20px auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+section {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  max-width: 700px;
 }
 
-/* Card styling for individual team bios */
-.card {
-    background: var(--color-card);
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    margin: 10px;
-    padding: 20px;
-    flex: 1 1 calc(30% - 40px);
-    text-align: center;
-    transition: transform 0.2s, box-shadow 0.2s;
+h2 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
 }
 
-.card:hover {
-    transform: scale(1.05);
+/* Menu grid */
+#menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
 }
 
-.avatar {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    margin: 10px 0;
-    border: 3px solid var(--color-accent)
+.menu-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0.75rem;
+  text-align: center;
+  background: #fafafa;
 }
 
-.avatar:hover {
-    transform: scale(1.05);
-    transition: 0.2s;
+.menu-card img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
 }
 
-/* Initially hide bio details */
-.bio {
-    background: var(--color-accent);
-    color: var(--color-header);
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: none;
+.menu-card h3 {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.menu-card .price {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.menu-card .info {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 8px;
 }
 
-/* Button styling */
+/* Order type radios */
+#order-type {
+  display: flex;
+  gap: 1.5rem;
+  margin: 6px 0 1rem;
+}
+#order-type label {
+  font-size: 14px;
+  color: #333;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* Promo */
+#promo {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 160px;
+}
+#promo-msg {
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+}
+
+#checkout-total {
+  font-weight: 600;
+  font-size: 15px;
+  margin: 1rem 0 0.5rem;
+}
+
+/* Buttons */
 button {
-    background: #007BFF;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
+  margin-top: 0.75rem;
+  margin-right: 8px;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 6px;
+  background: #333;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
 }
 
 button:hover {
-    background: var(--color-hover);
+  background: #555;
+}
+
+/* Order list */
+#order-list {
+  list-style: none;
+  font-size: 14px;
+  margin-bottom: 0.75rem;
+}
+#order-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+#order-total {
+  font-weight: 600;
+  font-size: 15px;
+  margin-top: 0.5rem;
+}
+
+#order-status {
+  margin-top: 0.5rem;
+  font-size: 13px;
+  color: #2a7a2a;
+}
+
+.hidden {
+  display: none;
 }

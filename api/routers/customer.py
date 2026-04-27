@@ -33,3 +33,8 @@ def update(item_id: int, request: schema.CustomerUpdate, db: Session = Depends(g
 @router.delete("/{item_id}")
 def delete(item_id: int, db: Session = Depends(get_db)):
     return controller.delete(db=db, item_id=item_id)
+
+
+@router.post("/login", response_model=schema.Customer)
+def login(request: schema.CustomerLogin, db: Session = Depends(get_db)):
+    return controller.login(db=db, email=request.email)
