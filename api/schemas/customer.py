@@ -20,6 +20,10 @@ class CustomerUpdate(BaseModel):
     address: Optional[str] = None
 
 
+class CustomerLogin(BaseModel):
+    email: str
+
+
 class Customer(CustomerBase):
     id: int
 
