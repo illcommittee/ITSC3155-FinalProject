@@ -1,33 +1,21 @@
-/**
- * Toggles the display of an individual team member's bio
- * @param {string} bioId - The ID of the bio section to show or hide
- */
-function toggleBio(bioId) {
-    const bio = document.getElementById(bioId);
-    // Toggle between showing and hiding the bio section
-    if (bio.style.display === "none" || bio.style.display === "") {
-        bio.style.display = "block";
-    } else {
-        bio.style.display = "none";
-    }
-}
+from sqlalchemy import Column, ForeignKey, Integer, String, DECIMAL, DATETIME, Float, Boolean
+from sqlalchemy.orm import relationship
+from datetime import datetime
+from ..dependencies.database import Base
 
-/**
- * Shows the specified section ('bios' or 'vision') and hides the other
- * @param {string} sectionId - The ID of the section to display
- */
-function showSection(sectionId) {
-    const biosSection = document.getElementById("bios");
-    const visionSection = document.getElementById("vision");
 
-    // Display the bios section and hide the vision section
-    if (sectionId === "bios") {
-        biosSection.style.display = "flex";
-        visionSection.style.display = "none";
-    }
-    // Display the vision section and hide the bios section
-    else if (sectionId === "vision") {
-        biosSection.style.display = "none";
-        visionSection.style.display = "block";
-    }
-}
+class Order(Base):
+    __tablename__ = "orders"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    customer_id = Column(Integer, ForeignKey("customer.id"), nullable=False)
+    order_num = Column(Integer)
+    customer_name = Column(String(100))
+    order_date = Column(DATETIME, default=datetime.now, nullable=False)
+    tracking_num = Column(String(50), nullable=False, unique=True)
+    order_status = Column(Boolean, nullable=False)
+    total_price = Column(Float, nullable=False)
+
+
+    customer = relationship("Customer", back_populates="orders")
+    payment_info = relationship("PaymentInfo", back_populates="order", uselist=False)

@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class ResourceBase(BaseModel):
-    order_date: datetime
+    #Removed "order_date: datetime" as it's located in /models/resources.py
     dishes: str
     ingredients: str
     resource_amount: str
@@ -27,6 +27,10 @@ class ResourceUpdate(BaseModel):
 
 class Resource(ResourceBase):
     id: int
+    order_date: datetime
+
+    class ConfigDict:
+        from_attributes = True
 
     class ConfigDict:
         from_attributes = True
