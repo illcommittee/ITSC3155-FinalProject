@@ -11,6 +11,7 @@ class Customer(Base):
     phone_num = Column(Integer, nullable=False)
     address = Column(String(200), nullable=False)
     order_num = Column(Integer, nullable=False)
+    password_hash = Column(String(255), nullable=False)
 
     orders = relationship("Order", back_populates="customer")
     reviews = relationship("Review", back_populates="customer")
