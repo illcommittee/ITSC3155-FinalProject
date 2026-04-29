@@ -10,7 +10,7 @@ class CustomerBase(BaseModel):
     address: str
 
 class CustomerCreate(CustomerBase):
-    pass
+    password: str
 
 
 class CustomerUpdate(BaseModel):
@@ -27,5 +27,5 @@ class CustomerLogin(BaseModel):
 class Customer(CustomerBase):
     id: int
 
-    class ConfigDict:
+    class Config:
         from_attributes = True

@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Response
 from ..models import customer as model
 from sqlalchemy.exc import SQLAlchemyError
+import hashlib
 
 
 def create(db: Session, request):
@@ -11,6 +12,7 @@ def create(db: Session, request):
         email=request.email,
         phone_num=request.phone_num,
         address=request.address,
+        password_hash=hash_password(request.password)
     )
 
     try:
@@ -57,25 +59,29 @@ def update(db: Session, item_id, request):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
 
 
-def delete(db: Session, item_id):
+def delete(db: Session, item):
     try:
-        item = db.query(model.Customer).filter(model.Customer.id == item_id)
-        if not item.first():
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
         item.delete(synchronize_session=False)
         db.commit()
+        return Response(status_code=status.HTTP_204_NO_CONTENT)
     except SQLAlchemyError as e:
         error = str(e.__dict__.get("orig", e))
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-    return
 
-
-def login(db: Session, email: str):
+def login(db: Session, email: str, password: str):
     try:
         customer = db.query(model.Customer).filter(model.Customer.email == email).first()
         if not customer:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Customer not found.")
+        
+        if customer.password_hash != hash_password(password):
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid password.")
+
         return customer
+    
     except SQLAlchemyError as e:
         error = str(e.__dict__.get("orig", e))
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
+def hash_password(password: str):
+    return hashlib.sha256(password.encode()).hexdigest()
