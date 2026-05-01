@@ -3,7 +3,8 @@ from pydantic import BaseModel
 
 
 class ReviewBase(BaseModel):
-    customer_id: int
+    customer_id: Optional[int] = None
+    resource_id: Optional[int] = None
     review_txt: str
     score: int
 
