@@ -1,8 +1,11 @@
 const API_BASE = "http://localhost:5000";
+
+// Promotions
 const PROMO_CODES = { SAVE10: 0.1, HALFOFF: 0.5 };
 let orderItems = [];
 let discount = 0;
 
+// Menu for Backend
 async function loadMenu() {
   try {
     const res = await fetch(`${API_BASE}/resources`);
@@ -14,6 +17,7 @@ async function loadMenu() {
   }
 }
 
+// Categories
 function renderCategoryFilter(items) {
   const categories = ["All", ...new Set(items.map(i => i.category).filter(Boolean))];
   const bar = document.getElementById("category-bar");
@@ -31,6 +35,7 @@ function renderCategoryFilter(items) {
   });
 }
 
+// Menu Items
 function renderMenu(items) {
   const grid = document.getElementById("menu-grid");
   grid.innerHTML = "";
@@ -48,7 +53,7 @@ function renderMenu(items) {
   });
 }
 
-
+// Cart
 function addToOrder(item) {
   const existing = orderItems.find(i => i.id === item.id);
   if (existing) existing.qty++;
@@ -68,18 +73,19 @@ function renderOrder() {
   });
   document.getElementById("order-total").textContent = `Total: $${total.toFixed(2)}`;
 }
-
+// Total
 function getTotal() {
   return orderItems.reduce((sum, i) => sum + i.menu_price * i.qty, 0);
 }
 
-
+// Checkout System
 function showCheckout() {
   if (!orderItems.length) return alert("Add items first!");
   document.getElementById("checkout-section").classList.remove("hidden");
   updateCheckoutTotal();
 }
 
+// Promo System
 function applyPromo() {
   const code = document.getElementById("promo").value.trim().toUpperCase();
   discount = PROMO_CODES[code] || 0;
@@ -89,11 +95,13 @@ function applyPromo() {
   updateCheckoutTotal();
 }
 
+// Checkout Total
 function updateCheckoutTotal() {
   const total = getTotal() * (1 - discount);
   document.getElementById("checkout-total").textContent = `Total to pay: $${total.toFixed(2)}`;
 }
 
+// Placing Order
 async function placeOrder() {
   const name = document.getElementById("card-name").value.trim();
   if (!name) return alert("Please enter your name for payment.");
@@ -121,7 +129,7 @@ async function placeOrder() {
     finishOrder("ORD" + Math.floor(10000 + Math.random() * 90000), total);
   }
 }
-
+// Orders Completed
 function finishOrder(orderId, total) {
   const orders = JSON.parse(localStorage.getItem("trackedOrders") || "{}");
   orders[orderId] = { status: "Order Received", total, placedAt: new Date().toLocaleString() };
@@ -136,7 +144,7 @@ function finishOrder(orderId, total) {
   document.getElementById("checkout-section").classList.add("hidden");
 }
 
-// ── Tracking ──────────────────────────────────────
+// Order Tracking System
 
 function trackOrder() {
   const input = document.getElementById("tracking-input").value.trim();
