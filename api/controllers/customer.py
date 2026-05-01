@@ -7,14 +7,13 @@ import hashlib
 
 def create(db: Session, request):
     new_item = model.Customer(
-        order_num=request.order_num,
+        order_num=0,
         customer_name=request.customer_name,
         email=request.email,
         phone_num=request.phone_num,
         address=request.address,
-        password_hash=hash_password(request.password)
+        password_hash=hash_password(request.password),
     )
-
     try:
         db.add(new_item)
         db.commit()
@@ -22,7 +21,6 @@ def create(db: Session, request):
     except SQLAlchemyError as e:
         error = str(e.__dict__.get("orig", e))
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-
     return new_item
 
 
@@ -59,29 +57,31 @@ def update(db: Session, item_id, request):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
 
 
-def delete(db: Session, item):
+def delete(db: Session, item_id):
     try:
+        item = db.query(model.Customer).filter(model.Customer.id == item_id)
+        if not item.first():
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Customer not found")
         item.delete(synchronize_session=False)
         db.commit()
-        return Response(status_code=status.HTTP_204_NO_CONTENT)
     except SQLAlchemyError as e:
         error = str(e.__dict__.get("orig", e))
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
 
 def login(db: Session, email: str, password: str):
     try:
         customer = db.query(model.Customer).filter(model.Customer.email == email).first()
         if not customer:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Customer not found.")
-        
         if customer.password_hash != hash_password(password):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid password.")
-
         return customer
-    
     except SQLAlchemyError as e:
         error = str(e.__dict__.get("orig", e))
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
 
 def hash_password(password: str):
     return hashlib.sha256(password.encode()).hexdigest()
