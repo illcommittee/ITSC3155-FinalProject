@@ -2,6 +2,9 @@ from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from ..dependencies.database import Base
 
+# The payment information SQL table. This tracks the payment of the orders themselves.
+# The primary key ID is present for easy reference, along with the status and type of payment
+# and any promotional codes added for discount.
 class PaymentInfo(Base):
     __tablename__ = "payment_info"
 

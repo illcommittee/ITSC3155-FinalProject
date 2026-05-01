@@ -5,6 +5,10 @@ from api.dependencies.database import get_db
 from api.schemas.users import UserCreate, UserLogin, User
 from api.controllers import users as user_controller
 
+# The routers for the users table.
+# Viewable by the FastAPI app reload in the terminal!
+# Will return HTTPException if the username exists or the password is invalid.
+
 router = APIRouter(
     prefix="/users",
     tags=["Users"]
