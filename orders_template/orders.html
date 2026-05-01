@@ -1,51 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="icon" type="image/png" href="img/favicon48x48.png">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>My Orders — Inspector Gadget's Restaurant</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Navbar -->
+
   <nav>
     <div class="navbar">
       <h2 class="logo">Inspector Gadget's Restaurant</h2>
-
       <ul class="nav-links">
         <a href="../menu_template/menu.html">Menu</a>
-        <a href="../cart_template/cart.html">Cart</a>
-        <a href="../group_bio_template\index.html">About</a>
-        <a href="../group_bio_template\index.html">Orders</a>
-        <a href="../login_template/login.html">Login/Signup</a>
+        <a href="../orders_template/orders.html">My Orders</a>
+        <a href="../group_bio_template/index.html">About</a>
+        <a href="../staff_template/staff.html">Staff</a>
+        <a href="../login_template/login.html" id="auth-link">Login/Signup</a>
       </ul>
     </div>
   </nav>
 
-  <div class="container">
-    <div class="card">
-        <h2>Menu Item</h2>
-        <img src="../group_bio_template/img/andychoo.jpeg" alt="food photo" class="avatar"/>
-        <button onclick="toggleBio('bio2')">Show Description</button>
-        <div id="bio2" class="bio">
-            <p>Ingredients: apples, sardines, pickles, beets</p>
-        </div>
-    </div>
-  </div>
+  <main>
 
-  <!-- Displays All Current Orders -->
-  <div class="container">
-    <div class="card">
-        <h2>Order Details</h2>
-        <img src="../group_bio_template/img/avatar-jeevan.jpg" alt="food photo" class="avatar"/>
-        <button onclick="toggleBio('bio3'); allOrders()">Show All Orders</button>
-        <div id="bio3" class="bio">
-            <p id="all-orders"></p>
-        </div>
-    </div>
-  </div>
+    <!-- Track by tracking number -->
+    <section>
+      <h2>Track an Order</h2>
+      <div class="track-row">
+        <input type="text" id="track-input" placeholder="Enter tracking number (e.g. TRK-ALICE001)" />
+        <button id="track-btn">Track</button>
+      </div>
+      <div id="track-result" class="hidden"></div>
+    </section>
 
-<script src="script.js"></script> <!-- Link to external JavaScript file -->
+    <!-- Customer's own orders (if logged in) -->
+    <section id="my-orders-section">
+      <h2>My Order History</h2>
+      <div id="my-orders-list"><p class="muted">Log in to see your order history.</p></div>
+    </section>
+
+  </main>
+
+  <script src="orders.js"></script>
 </body>
 </html>
