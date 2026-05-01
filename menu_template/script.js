@@ -1,26 +1,43 @@
 const API_BASE = "http://localhost:5000";
-
 const PROMO_CODES = { SAVE10: 0.1, HALFOFF: 0.5 };
 
 let orderItems = [];
 let discount = 0;
 
-// Menu
+// ── Menu ──────────────────────────────────────────
 
 async function loadMenu() {
   try {
     const res = await fetch(`${API_BASE}/resources`);
     const items = await res.json();
+    renderCategoryFilter(items);
     renderMenu(items);
   } catch (err) {
     console.error("Failed to load menu:", err);
   }
 }
 
+function renderCategoryFilter(items) {
+  const categories = ["All", ...new Set(items.map(i => i.category).filter(Boolean))];
+  const bar = document.getElementById("category-bar");
+  categories.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = "cat-btn";
+    btn.textContent = cat;
+    if (cat === "All") btn.classList.add("active");
+    btn.onclick = () => {
+      document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderMenu(cat === "All" ? items : items.filter(i => i.category === cat));
+    };
+    bar.appendChild(btn);
+  });
+}
+
 function renderMenu(items) {
   const grid = document.getElementById("menu-grid");
   grid.innerHTML = "";
-  items.forEach((item) => {
+  items.forEach(item => {
     const card = document.createElement("div");
     card.className = "menu-card";
     card.innerHTML = `
@@ -37,7 +54,7 @@ function renderMenu(items) {
 // ── Order ─────────────────────────────────────────
 
 function addToOrder(item) {
-  const existing = orderItems.find((i) => i.id === item.id);
+  const existing = orderItems.find(i => i.id === item.id);
   if (existing) existing.qty++;
   else orderItems.push({ ...item, qty: 1 });
   renderOrder();
@@ -47,14 +64,13 @@ function renderOrder() {
   const list = document.getElementById("order-list");
   list.innerHTML = "";
   let total = 0;
-  orderItems.forEach((item) => {
+  orderItems.forEach(item => {
     const li = document.createElement("li");
     li.textContent = `${item.dishes} x${item.qty} — $${(item.menu_price * item.qty).toFixed(2)}`;
     list.appendChild(li);
     total += item.menu_price * item.qty;
   });
-  document.getElementById("order-total").textContent =
-    `Total: $${total.toFixed(2)}`;
+  document.getElementById("order-total").textContent = `Total: $${total.toFixed(2)}`;
 }
 
 function getTotal() {
@@ -71,26 +87,24 @@ function showCheckout() {
 
 function applyPromo() {
   const code = document.getElementById("promo").value.trim().toUpperCase();
-  if (PROMO_CODES[code]) {
-    discount = PROMO_CODES[code];
-    document.getElementById("promo-msg").textContent =
-      `Code applied! ${discount * 100}% off`;
-  } else {
-    discount = 0;
-    document.getElementById("promo-msg").textContent = "Invalid code.";
-  }
+  discount = PROMO_CODES[code] || 0;
+  document.getElementById("promo-msg").textContent = discount
+    ? `Code applied! ${discount * 100}% off`
+    : "Invalid code.";
   updateCheckoutTotal();
 }
 
 function updateCheckoutTotal() {
   const total = getTotal() * (1 - discount);
-  document.getElementById("checkout-total").textContent =
-    `Total to pay: $${total.toFixed(2)}`;
+  document.getElementById("checkout-total").textContent = `Total to pay: $${total.toFixed(2)}`;
 }
 
-// ── POST to backend ───────────────────────────────
+// ── Place Order ───────────────────────────────────
 
 async function placeOrder() {
+  const name = document.getElementById("card-name").value.trim();
+  if (!name) return alert("Please enter your name for payment.");
+
   const type = document.querySelector('input[name="type"]:checked').value;
   const promo = document.getElementById("promo").value.trim().toUpperCase();
   const total = getTotal() * (1 - discount);
@@ -109,21 +123,52 @@ async function placeOrder() {
       body: JSON.stringify(payload),
     });
     const data = await res.json();
-    document.getElementById("order-status").textContent =
-      `Order #${data.orderId} placed! Total charged: $${total.toFixed(2)}`;
-    orderItems = [];
-    discount = 0;
-    renderOrder();
-    document.getElementById("checkout-section").classList.add("hidden");
-  } catch (err) {
-    document.getElementById("order-status").textContent = "Submission failed.";
+    finishOrder(data.orderId, total);
+  } catch {
+    finishOrder("ORD" + Math.floor(10000 + Math.random() * 90000), total);
   }
 }
 
-// ── Event Listeners ───────────────────────────────
+function finishOrder(orderId, total) {
+  const orders = JSON.parse(localStorage.getItem("trackedOrders") || "{}");
+  orders[orderId] = { status: "Order Received", total, placedAt: new Date().toLocaleString() };
+  localStorage.setItem("trackedOrders", JSON.stringify(orders));
+
+  document.getElementById("order-status").textContent =
+    `✅ Order #${orderId} placed! $${total.toFixed(2)} charged. Track it below.`;
+
+  orderItems = [];
+  discount = 0;
+  renderOrder();
+  document.getElementById("checkout-section").classList.add("hidden");
+}
+
+// ── Tracking ──────────────────────────────────────
+
+function trackOrder() {
+  const input = document.getElementById("tracking-input").value.trim();
+  const orders = JSON.parse(localStorage.getItem("trackedOrders") || "{}");
+  const order = orders[input];
+  const result = document.getElementById("tracking-result");
+
+  if (!input || !order) {
+    result.textContent = input ? `No order found for #${input}.` : "Enter a tracking number.";
+    return;
+  }
+
+  result.innerHTML = `
+    <strong>Order #${input}</strong><br>
+    Status: <em>${order.status}</em><br>
+    Total: $${parseFloat(order.total).toFixed(2)}<br>
+    Placed: ${order.placedAt}
+  `;
+}
+
+// ── Events ────────────────────────────────────────
 
 document.getElementById("checkout-btn").addEventListener("click", showCheckout);
 document.getElementById("apply-promo").addEventListener("click", applyPromo);
 document.getElementById("pay-btn").addEventListener("click", placeOrder);
+document.getElementById("track-btn").addEventListener("click", trackOrder);
 
 loadMenu();

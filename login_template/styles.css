@@ -27,10 +27,147 @@ body {
 }
 
 .nav-links {
+  display: flex;:root {
+  --color-bg: #7c6c77; /* Dusty Mauve (page background) */
+  --color-header: #0d0630; /* Dark Amethyst (header / text) */
+  --color-card: #82aeb1; /* Teal (cards) */
+  --color-accent: #e3b505; /* Saffron (buttons / highlights) */
+  --color-hover: #a7c7e7; /* Sky Blue (hover effects) */
+  --color-text: #0d0630; /* Main text */
+  --color-light: #a7c7e7; /* Secondary background */
+}
+
+/* General page styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--color-bg);
+  margin: 0;
+  padding: 0;
+  color: var(--color-text);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--color-card);
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.nav-links {
   display: flex;
   justify-content: space-between;
 }
 
 .nav-links a {
   padding: 5px;
+}
+
+
+main {
+  padding: 30px;
+}
+
+
+section {
+  background-color: var(--color-card);
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+}
+
+
+form label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+
+form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+
+form button {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--color-accent);
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+form button:hover {
+  background-color: var(--color-hover);
+}
+  justify-content: space-between;
+}
+
+.nav-links a {
+  padding: 5px;
+}
+
+
+main {
+  padding: 30px;
+}
+
+
+section {
+  background-color: var(--color-card);
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+}
+
+
+form label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+
+form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+
+form button {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--color-accent);
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+form button:hover {
+  background-color: var(--color-hover);
+
+  .hidden {
+  display: none;
+}
 }
