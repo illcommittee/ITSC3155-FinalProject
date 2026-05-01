@@ -1,10 +1,7 @@
 const API_BASE = "http://localhost:5000";
 const PROMO_CODES = { SAVE10: 0.1, HALFOFF: 0.5 };
-
 let orderItems = [];
 let discount = 0;
-
-// ── Menu ──────────────────────────────────────────
 
 async function loadMenu() {
   try {
@@ -51,7 +48,6 @@ function renderMenu(items) {
   });
 }
 
-// ── Order ─────────────────────────────────────────
 
 function addToOrder(item) {
   const existing = orderItems.find(i => i.id === item.id);
@@ -77,7 +73,6 @@ function getTotal() {
   return orderItems.reduce((sum, i) => sum + i.menu_price * i.qty, 0);
 }
 
-// ── Checkout ──────────────────────────────────────
 
 function showCheckout() {
   if (!orderItems.length) return alert("Add items first!");
@@ -98,8 +93,6 @@ function updateCheckoutTotal() {
   const total = getTotal() * (1 - discount);
   document.getElementById("checkout-total").textContent = `Total to pay: $${total.toFixed(2)}`;
 }
-
-// ── Place Order ───────────────────────────────────
 
 async function placeOrder() {
   const name = document.getElementById("card-name").value.trim();
@@ -163,8 +156,6 @@ function trackOrder() {
     Placed: ${order.placedAt}
   `;
 }
-
-// ── Events ────────────────────────────────────────
 
 document.getElementById("checkout-btn").addEventListener("click", showCheckout);
 document.getElementById("apply-promo").addEventListener("click", applyPromo);
