@@ -5,11 +5,13 @@ from pydantic import BaseModel
 
 class PromotionBase(BaseModel):
     promo_code: str
-    discount_percent: float = 10.0 # We decided discounts will be 10% by default
+    discount_percent: float
     expiration_date: datetime
+
 
 class PromotionCreate(PromotionBase):
     pass
+
 
 class PromotionUpdate(BaseModel):
     promo_code: Optional[str] = None
@@ -20,5 +22,5 @@ class PromotionUpdate(BaseModel):
 class Promotion(PromotionBase):
     id: int
 
-    class ConfigDict:
+    class Config:
         from_attributes = True

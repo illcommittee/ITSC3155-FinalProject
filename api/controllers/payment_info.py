@@ -55,12 +55,12 @@ def update(db: Session, item_id: int, request):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     
 
-def delete(db: Session, item_id: int, request):
+def delete(db: Session, item_id: int):
     try:
         item = db.query(model.PaymentInfo).filter(model.PaymentInfo.id == item_id)
         if not item.first():
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Payment not found")
-        item.update(request.model_dump(exclude_unset=True), synchronize_session=False)
+        item.delete(synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
         error = str(e.__dict__.get("orig", e))
