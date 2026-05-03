@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>My Orders — Inspector Gadget's Restaurant</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders | Inspector Gadget's Restaurant</title>
+  <link rel="icon" type="image/png" href="img/favicon48x48.png">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -11,35 +13,54 @@
     <div class="navbar">
       <h2 class="logo">Inspector Gadget's Restaurant</h2>
       <ul class="nav-links">
-        <a href="../menu_template/menu.html">Menu</a>
-        <a href="../orders_template/orders.html">My Orders</a>
-        <a href="../group_bio_template/index.html">About</a>
-        <a href="../staff_template/staff.html">Staff</a>
-        <a href="../login_template/login.html" id="auth-link">Login/Signup</a>
+        <li><a href="../menu_template/menu.html">Menu</a></li>
+        <li><a href="../cart_template/cart.html">Cart</a></li>
+        <li><a href="../group_bio_template/index.html">About</a></li>
+        <li><a href="../orders_template/orders.html">Orders</a></li>
+        <li><a href="../login_template/login.html">Login/Signup</a></li>
       </ul>
     </div>
   </nav>
 
   <main>
+    <h1>Order Management</h1>
 
-    <!-- Track by tracking number -->
-    <section>
-      <h2>Track an Order</h2>
-      <div class="track-row">
-        <input type="text" id="track-input" placeholder="Enter tracking number (e.g. TRK-ALICE001)" />
-        <button id="track-btn">Track</button>
+    <div class="container">
+      <div class="card">
+        <h2>All Orders</h2>
+        <p>View all current orders stored in the database.</p>
+        <button onclick="toggleSection('all-orders-panel'); allOrders()">Show All Orders</button>
+        <div id="all-orders-panel" class="details-panel">
+          <div id="all-orders">No orders loaded yet.</div>
+        </div>
       </div>
-      <div id="track-result" class="hidden"></div>
-    </section>
 
-    <!-- Customer's own orders (if logged in) -->
-    <section id="my-orders-section">
-      <h2>My Order History</h2>
-      <div id="my-orders-list"><p class="muted">Log in to see your order history.</p></div>
-    </section>
+      <div class="card">
+        <h2>Track Order</h2>
+        <p>Look up an order using its tracking number.</p>
 
+        <input type="text" id="tracking-input" placeholder="Example: TRACK1002">
+        <button onclick="trackOrder()">Track Order</button>
+
+        <div id="tracking-panel" class="details-panel">
+          <pre id="tracking-result">Enter a tracking number to search.</pre>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Revenue by Date</h2>
+        <p>View total revenue for a selected date.</p>
+
+        <input type="date" id="revenue-date" value="2026-04-29">
+        <button onclick="getRevenue()">Show Revenue</button>
+
+        <div id="revenue-panel" class="details-panel">
+          <pre id="revenue-result">Choose a date to view revenue.</pre>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <script src="orders.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

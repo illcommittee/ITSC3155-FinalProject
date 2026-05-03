@@ -1,7 +1,7 @@
 import uvicorn
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import index as indexRoute
+from .routers import index as router_index
 from .models import model_loader
 from .dependencies.config import conf
 
@@ -19,7 +19,7 @@ app.add_middleware(
 )
 
 model_loader.index()
-indexRoute.load_routes(app)
+router_index.load_routes(app)
 
 
 if __name__ == "__main__":
