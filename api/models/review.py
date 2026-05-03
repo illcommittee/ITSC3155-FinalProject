@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 
 from ..dependencies.database import Base
 
+
 class Review(Base):
     __tablename__ = "review"
 
@@ -13,4 +14,3 @@ class Review(Base):
     score = Column(Integer, nullable=False)
 
     customer = relationship("Customer", back_populates="reviews")
-    resource = relationship("Resource", back_populates="reviews")
