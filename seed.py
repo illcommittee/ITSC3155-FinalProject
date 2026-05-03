@@ -1,8 +1,9 @@
 """
-Seed script for populating the Online Restaurant Ordering System database.
+Seed script for the final project demo.
 
-Run from the project root:
-    python seed.py
+This script clears existing demo records and inserts sample menu items,
+customers, promotions, orders, payment records, and reviews so the API
+has data available for Swagger testing and the frontend demo.
 """
 
 from datetime import datetime
