@@ -1,9 +1,11 @@
+import re
 import random
 import string
 from datetime import datetime, date
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response
 from ..models import orders as model
+from ..models.resources import Resource
 from sqlalchemy.exc import SQLAlchemyError
 
 
@@ -15,6 +17,26 @@ def _gen_tracking():
 def _next_order_num(db: Session) -> int:
     last = db.query(model.Order).order_by(model.Order.order_num.desc()).first()
     return (last.order_num + 1) if last and last.order_num else 1001
+
+
+def _deduct_stock(db: Session, order_details: str):
+    """Decrement resource_amount for every dish in order_details.
+
+    Handles both 'Dish Name x2' (frontend format) and 'Dish Name' (no qty).
+    Stock is clamped to 0 and never goes negative.
+    """
+    if not order_details:
+        return
+    for part in order_details.split(", "):
+        part = part.strip()
+        match = re.match(r'^(.+?)\s+x(\d+)$', part)
+        dish_name = match.group(1).strip() if match else part
+        qty = int(match.group(2)) if match else 1
+
+        resource = db.query(Resource).filter(Resource.dishes == dish_name).first()
+        if resource:
+            current = int(resource.resource_amount) if resource.resource_amount.isdigit() else 0
+            resource.resource_amount = str(max(0, current - qty))
 
 
 def create(db: Session, request):
@@ -30,6 +52,7 @@ def create(db: Session, request):
     )
     try:
         db.add(new_item)
+        _deduct_stock(db, request.order_details)
         db.commit()
         db.refresh(new_item)
     except SQLAlchemyError as e:
