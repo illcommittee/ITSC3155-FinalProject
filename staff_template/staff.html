@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Staff Dashboard — Inspector Gadget's Restaurant</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <nav>
+    <div class="navbar">
+      <h2 class="logo">Inspector Gadget's Restaurant — Staff</h2>
+      <ul class="nav-links">
+        <a href="../menu_template/menu.html">Menu</a>
+        <a href="../orders_template/orders.html">Orders</a>
+        <a href="../group_bio_template/index.html">About</a>
+        <a href="../login_template/login.html">Customer Login</a>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="orders">All Orders</button>
+    <button class="tab-btn" data-tab="revenue">Revenue</button>
+    <button class="tab-btn" data-tab="promos">Promo Codes</button>
+    <button class="tab-btn" data-tab="inventory">Inventory Check</button>
+    <button class="tab-btn" data-tab="top-dishes">Top Dishes</button>
+  </div>
+
+  <!-- Orders Tab -->
+  <div id="tab-orders" class="tab-content">
+    <section>
+      <h2>All Orders</h2>
+      <div class="filter-row">
+        <label>From: <input type="date" id="start-date" /></label>
+        <label>To: <input type="date" id="end-date" /></label>
+        <button id="filter-orders-btn">Filter</button>
+        <button id="clear-filter-btn">Clear</button>
+      </div>
+      <div id="orders-list"><p class="muted">Loading…</p></div>
+    </section>
+  </div>
+
+  <!-- Revenue Tab -->
+  <div id="tab-revenue" class="tab-content hidden">
+    <section>
+      <h2>Revenue</h2>
+      <div class="filter-row">
+        <label>Date: <input type="date" id="revenue-date" /></label>
+        <button id="revenue-btn">Get Revenue</button>
+        <button id="all-revenue-btn">All Time</button>
+      </div>
+      <div id="revenue-result" class="result-box hidden"></div>
+    </section>
+  </div>
+
+  <!-- Promos Tab -->
+  <div id="tab-promos" class="tab-content hidden">
+    <section>
+      <h2>Create Promo Code</h2>
+      <div class="form-grid">
+        <label>Code <input type="text" id="promo-code" placeholder="e.g. SUMMER20" /></label>
+        <label>Discount % <input type="number" id="promo-discount" placeholder="10" min="1" max="100" /></label>
+        <label>Expires <input type="datetime-local" id="promo-expires" /></label>
+      </div>
+      <button id="create-promo-btn">Create Promo</button>
+      <p id="promo-create-msg" class="msg"></p>
+    </section>
+    <section>
+      <h2>Active Promo Codes</h2>
+      <div id="promos-list"><p class="muted">Loading…</p></div>
+    </section>
+  </div>
+
+  <!-- Inventory Tab -->
+  <div id="tab-inventory" class="tab-content hidden">
+    <section>
+      <h2>Ingredient / Stock Check</h2>
+      <p class="muted">Items with 0 stock are flagged.</p>
+      <div id="inventory-list"><p class="muted">Loading…</p></div>
+    </section>
+  </div>
+
+  <!-- Top Dishes Tab -->
+  <div id="tab-top-dishes" class="tab-content hidden">
+    <section>
+      <h2>Dishes Ranked by Reviews</h2>
+      <div id="top-dishes-list"><p class="muted">Loading…</p></div>
+    </section>
+  </div>
+
+  <script src="staff.js"></script>
+</body>
+</html>

@@ -14,23 +14,27 @@ body {
   background-color: var(--color-bg);
   margin: 0;
   padding: 0;
-  color: var(--color-text);
 }
 
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
-  background-color: var(--color-card);
   align-items: center;
   padding-left: 20px;
   padding-right: 20px;
 }
-
 .nav-links {
   display: flex;
   justify-content: space-between;
 }
-
 .nav-links a {
   padding: 5px;
 }

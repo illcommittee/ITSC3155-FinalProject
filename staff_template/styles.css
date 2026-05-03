@@ -1,0 +1,282 @@
+:root {
+  --bg: #7c6c77;
+  --header: #0d0630;
+  --card: #82aeb1;
+  --accent: #e3b505;
+  --text: #0d0630;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--card);
+  padding: 12px 24px;
+}
+.logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.nav-links {
+  display: flex;
+  gap: 16px;
+  list-style: none;
+}
+.nav-links a {
+  text-decoration: none;
+  color: var(--header);
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.nav-links a:hover {
+  background: var(--accent);
+}
+
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  padding: 12px 24px 0;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+.tab-btn {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 6px 6px 0 0;
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 0;
+}
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+.tab-btn.active {
+  background: #fff;
+  color: var(--header);
+  font-weight: 700;
+}
+
+/* Tab content */
+.tab-content {
+  padding: 20px 24px;
+}
+
+section {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+section h2 {
+  color: var(--header);
+  margin-bottom: 14px;
+}
+
+/* Filter row */
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.filter-row label {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+input[type="date"],
+input[type="datetime-local"] {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+/* Form grid */
+.form-grid {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.form-grid label {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.form-grid input {
+  padding: 7px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 13px;
+  width: 180px;
+}
+
+/* Buttons */
+button {
+  margin-top: 0;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background: var(--header);
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+button:hover {
+  background: #444;
+}
+.sm-btn {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+.complete-btn {
+  background: #28a745;
+}
+.complete-btn:hover {
+  background: #1e7e34;
+}
+.del-promo {
+  background: #dc3545;
+}
+.del-promo:hover {
+  background: #b02a37;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+th {
+  background: var(--header);
+  color: #fff;
+  padding: 8px 10px;
+  text-align: left;
+}
+td {
+  padding: 7px 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+tr:hover td {
+  background: #f5f5f5;
+}
+.mono {
+  font-family: monospace;
+  font-size: 12px;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.badge.done {
+  background: #d4edda;
+  color: #155724;
+}
+.badge.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+/* Revenue box */
+.result-box {
+  background: #f0f8f0;
+  border: 1px solid #28a745;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 12px;
+  text-align: center;
+}
+.rev-date {
+  font-size: 14px;
+  color: #555;
+}
+.rev-amount {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #155724;
+  margin: 8px 0;
+}
+.rev-count {
+  font-size: 14px;
+  color: #777;
+}
+
+/* Promo rows */
+.promo-row-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.promo-row-item.expired {
+  background: #fff3cd;
+}
+.promo-code-label {
+  font-weight: 700;
+  font-family: monospace;
+  font-size: 14px;
+  flex: 1;
+}
+.promo-pct {
+  font-size: 13px;
+  color: #155724;
+}
+.promo-exp {
+  font-size: 12px;
+  color: #666;
+  flex: 2;
+}
+
+/* Inventory */
+.low-stock td {
+  color: #dc3545;
+  font-weight: 600;
+  background: #fff5f5;
+}
+
+.msg {
+  margin-top: 10px;
+  font-size: 13px;
+}
+.muted {
+  color: #888;
+  font-size: 14px;
+}
+.error {
+  color: #dc3545;
+  font-size: 14px;
+}
+.hidden {
+  display: none !important;
+}
