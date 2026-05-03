@@ -1,13 +1,21 @@
-from fastapi import APIRouter, Depends, FastAPI, status, Response
+from fastapi import APIRouter, Depends, status, Response
 from sqlalchemy.orm import Session
 from ..controllers import customer as controller
 from ..schemas import customer as schema
-from ..dependencies.database import engine, get_db
+from ..dependencies.database import get_db
+
+# The routers for the customer table.
+# Viewable by the FastAPI app reload in the terminal!
 
 router = APIRouter(
-    tags=['Customers'],
+    tags=["Customers"],
     prefix="/customer"
 )
+
+
+@router.post("/login", response_model=schema.Customer)
+def login(request: schema.CustomerLogin, db: Session = Depends(get_db)):
+    return controller.login(db=db, email=request.email, password=request.password)
 
 
 @router.post("/", response_model=schema.Customer)

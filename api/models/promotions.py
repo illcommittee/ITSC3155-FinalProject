@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, String, Float, DATETIME
 from ..dependencies.database import Base
 
-
 class Promotion(Base):
     __tablename__ = "promotions"
 

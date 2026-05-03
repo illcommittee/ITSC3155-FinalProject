@@ -15,7 +15,7 @@ def test_create_order():
         "order_type": "takeout",
     }
 
-    order_object = model.Order(**order_data)
+    created_orders = []
 
     assert order_object.order_num == 2001
     assert order_object.customer_id == 1
