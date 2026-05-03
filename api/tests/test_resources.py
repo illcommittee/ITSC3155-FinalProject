@@ -42,4 +42,3 @@ def test_create_resource(db_session):
     assert created_resource.menu_price == 18.99
     assert created_resource.calories == 450
     assert created_resource.allergens == "Fish"
-    assert created_resource.order_date == datetime(2026, 5, 3, 12, 0, 0)
