@@ -1,234 +1,203 @@
-"""
-Seed script for populating the Online Restaurant Ordering System database.
+# To populate sql with data run: python seed.py
 
-Run from the project root:
-    python seed.py
+"""
+Seed script for populating the database with mock data.
+Usage: python seed.py
 """
 
 from datetime import datetime
-
-from api.dependencies.database import SessionLocal
-from api.models.customer import Customer
+from api.models.users import User
 from api.models.orders import Order
+from api.models.customer import Customer
 from api.models.payment_info import PaymentInfo
-from api.models.promotions import Promotion
-from api.models.resources import Resource
 from api.models.review import Review
+from api.dependencies.database import SessionLocal
 
 
 def seed_database():
-    """Reset and populate the database with demo data."""
+    """Populate the database with mock data for testing and demonstration."""
     db = SessionLocal()
 
     try:
-        # Delete child/dependent records first.
+        # Clear existing data
         db.query(Review).delete()
         db.query(PaymentInfo).delete()
         db.query(Order).delete()
-        db.query(Promotion).delete()
-        db.query(Resource).delete()
         db.query(Customer).delete()
+        db.query(User).delete()
         db.commit()
 
-        # Menu/resources
-        resources = [
-            Resource(
-                dishes="Chicken Sandwich",
-                ingredients="Chicken, bun, pickles",
-                resource_amount="25",
-                menu_price=8.99,
-                calories=550,
-                allergens="gluten",
-                category="sandwich",
-            ),
-            Resource(
-                dishes="Veggie Wrap",
-                ingredients="Tortilla, lettuce, tomato, cucumber, hummus",
-                resource_amount="18",
-                menu_price=7.49,
-                calories=430,
-                allergens="gluten",
-                category="vegetarian",
-            ),
-            Resource(
-                dishes="Kids Grilled Cheese",
-                ingredients="Bread, cheese, butter",
-                resource_amount="12",
-                menu_price=5.99,
-                calories=390,
-                allergens="gluten, dairy",
-                category="kids",
-            ),
-            Resource(
-                dishes="Spicy Chicken Bowl",
-                ingredients="Chicken, rice, peppers, spicy sauce",
-                resource_amount="0",
-                menu_price=10.99,
-                calories=720,
-                allergens=None,
-                category="spicy",
-            ),
+        # Seed Users
+        users = [
+            User(username="alice_johnson", password="password123"),
+            User(username="brian_lee", password="password123"),
+            User(username="carmen_ortiz", password="password123"),
+            User(username="admin", password="admin123"),
         ]
-        db.add_all(resources)
+        db.add_all(users)
         db.flush()
 
-        # Customers
+        # Seed Customers (required for foreign key)
         customers = [
             Customer(
-                order_num=1001,
                 customer_name="Alice Johnson",
                 email="alice.johnson@email.com",
-                phone_num="7045551001",
+                phone_num=1234567890,
                 address="123 Main St",
-                password_hash="password123",
+                order_num=2
             ),
             Customer(
-                order_num=1002,
                 customer_name="Brian Lee",
                 email="brian.lee@email.com",
-                phone_num="7045551002",
-                address="Pickup",
-                password_hash="password123",
+                phone_num=2345678901,
+                address="456 Oak Ave",
+                order_num=2
             ),
             Customer(
-                order_num=1003,
                 customer_name="Carmen Ortiz",
                 email="carmen.ortiz@email.com",
-                phone_num="7045551003",
+                phone_num=3456789012,
                 address="789 Pine Rd",
-                password_hash="password123",
+                order_num=1
             ),
         ]
         db.add_all(customers)
         db.flush()
 
-        # Promotions
-        promotions = [
-            Promotion(
-                promo_code="SAVE10",
-                discount_percent=10,
-                expiration_date=datetime.fromisoformat("2026-12-31T23:59:59"),
-            ),
-            Promotion(
-                promo_code="LUNCH5",
-                discount_percent=5,
-                expiration_date=datetime.fromisoformat("2026-06-30T23:59:59"),
-            ),
-        ]
-        db.add_all(promotions)
-        db.flush()
-
-        # Orders
+        # Seed Orders (5 orders)
         orders = [
             Order(
                 order_num=1001,
-                customer_id=customers[0].id,
+                customer_id=1,
                 customer_name="Alice Johnson",
                 order_date=datetime.fromisoformat("2026-04-29T10:15:00"),
                 tracking_num="TRACK1001",
                 order_status=True,
-                total_price=29.95,
-                order_details="Chicken Sandwich, Veggie Wrap",
-                order_type="delivery",
+                total_price=29.95
             ),
             Order(
                 order_num=1002,
-                customer_id=customers[1].id,
+                customer_id=2,
                 customer_name="Brian Lee",
                 order_date=datetime.fromisoformat("2026-04-29T11:20:00"),
                 tracking_num="TRACK1002",
                 order_status=False,
-                total_price=15.50,
-                order_details="Kids Grilled Cheese",
-                order_type="takeout",
+                total_price=15.50
             ),
             Order(
                 order_num=1003,
-                customer_id=customers[2].id,
-                customer_name="Carmen Ortiz",
-                order_date=datetime.fromisoformat("2026-04-30T13:45:00"),
+                customer_id=1,
+                customer_name="Alice Johnson",
+                order_date=datetime.fromisoformat("2026-04-29T12:30:00"),
                 tracking_num="TRACK1003",
                 order_status=True,
-                total_price=10.99,
-                order_details="Spicy Chicken Bowl",
-                order_type="delivery",
+                total_price=42.10
+            ),
+            Order(
+                order_num=1004,
+                customer_id=3,
+                customer_name="Carmen Ortiz",
+                order_date=datetime.fromisoformat("2026-04-29T13:45:00"),
+                tracking_num="TRACK1004",
+                order_status=True,
+                total_price=60.00
+            ),
+            Order(
+                order_num=1005,
+                customer_id=2,
+                customer_name="Brian Lee",
+                order_date=datetime.fromisoformat("2026-04-29T14:55:00"),
+                tracking_num="TRACK1005",
+                order_status=False,
+                total_price=22.75
             ),
         ]
         db.add_all(orders)
         db.flush()
 
-        # Payment information
-        payments = [
+        # Seed Payment Information
+        payment_infos = [
             PaymentInfo(
-                order_id=orders[0].id,
+                order_id=1,
                 total_price=29.95,
                 card_info="**** **** **** 1234",
                 transaction_status="Completed",
-                payment_type="Credit Card",
-                promo_code="SAVE10",
+                payment_type="Credit Card"
             ),
             PaymentInfo(
-                order_id=orders[1].id,
+                order_id=2,
                 total_price=15.50,
                 card_info="**** **** **** 5678",
                 transaction_status="Pending",
-                payment_type="Debit Card",
-                promo_code=None,
+                payment_type="Debit Card"
             ),
             PaymentInfo(
-                order_id=orders[2].id,
-                total_price=10.99,
-                card_info="PayPal transaction",
+                order_id=3,
+                total_price=42.10,
+                card_info="**** **** **** 1234",
                 transaction_status="Completed",
-                payment_type="PayPal",
-                promo_code="LUNCH5",
+                payment_type="Credit Card",
+                promo_code="SAVE10"
+            ),
+            PaymentInfo(
+                order_id=4,
+                total_price=60.00,
+                card_info="**** **** **** 9012",
+                transaction_status="Completed",
+                payment_type="PayPal"
+            ),
+            PaymentInfo(
+                order_id=5,
+                total_price=22.75,
+                card_info="**** **** **** 5678",
+                transaction_status="Failed",
+                payment_type="Debit Card"
             ),
         ]
-        db.add_all(payments)
+        db.add_all(payment_infos)
         db.flush()
 
-        # Reviews
+        # Seed Reviews
         reviews = [
             Review(
-                customer_id=customers[0].id,
-                resource_id=resources[0].id,
-                review_txt="Great sandwich. The chicken was fresh and the order was ready quickly.",
-                score=5,
+                customer_id=1,
+                review_txt="Great product! Fast delivery and excellent quality. Highly recommend.",
+                score=5
             ),
             Review(
-                customer_id=customers[1].id,
-                resource_id=resources[2].id,
-                review_txt="Good for kids, but the bread was a little too buttery.",
-                score=4,
+                customer_id=1,
+                review_txt="Good purchase, but packaging could be better.",
+                score=4
             ),
             Review(
-                customer_id=customers[2].id,
-                resource_id=resources[3].id,
-                review_txt="Too spicy for me and the bowl was missing sauce.",
-                score=2,
+                customer_id=2,
+                review_txt="Product arrived damaged. Customer service was helpful though.",
+                score=3
             ),
             Review(
-                customer_id=customers[0].id,
-                resource_id=resources[1].id,
-                review_txt="Nice vegetarian option. I would order it again.",
-                score=5,
+                customer_id=3,
+                review_txt="Perfect! Exactly what I was looking for. Will buy again!",
+                score=5
+            ),
+            Review(
+                customer_id=2,
+                review_txt="Decent product for the price.",
+                score=4
             ),
         ]
         db.add_all(reviews)
-
         db.commit()
 
-        print("Database seeded successfully.")
-        print(f"Created {len(resources)} resources/menu items.")
-        print(f"Created {len(customers)} customers.")
-        print(f"Created {len(promotions)} promotions.")
-        print(f"Created {len(orders)} orders.")
-        print(f"Created {len(payments)} payment records.")
-        print(f"Created {len(reviews)} reviews.")
+        print("✓ Database seeded successfully!")
+        print(f"  • Created {len(users)} users")
+        print(f"  • Created {len(customers)} customers")
+        print(f"  • Created {len(orders)} orders")
+        print(f"  • Created {len(payment_infos)} payment records")
+        print(f"  • Created {len(reviews)} reviews")
 
-    except Exception as error:
+    except Exception as e:
         db.rollback()
-        print(f"Seed failed: {error}")
+        print(f"✗ Error: {e}")
     finally:
         db.close()
 
