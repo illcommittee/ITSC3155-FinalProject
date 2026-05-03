@@ -13,6 +13,7 @@ def create(db: Session, request):
         calories=request.calories,
         allergens=request.allergens,
         category=request.category,
+        image_url=request.image_url,
     )
     try:
         db.add(new_item)
@@ -56,7 +57,7 @@ def check_ingredients(db: Session):
                 "dishes": item.dishes,
                 "category": item.category,
                 "resource_amount": item.resource_amount,
-                "sufficient": int(item.resource_amount) > 0,
+                "sufficient": item.resource_amount > 0,
             }
             for item in items
         ]

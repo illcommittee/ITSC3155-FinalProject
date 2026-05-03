@@ -1,17 +1,14 @@
 :root {
-  --color-bg: #7c6c77;
-  --color-header: #0d0630;
-  --color-card: #82aeb1;
-  --color-accent: #e3b505;
-  --color-hover: #a7c7e7;
-  --color-text: #0d0630;
-  --color-light: #a7c7e7;
+  --color-bg: #7c6c77; /* Dusty Mauve (page background) */
+  --color-header: #0d0630; /* Dark Amethyst (header / text) */
+  --color-card: #82aeb1; /* Teal (cards) */
+  --color-accent: #e3b505; /* Saffron (buttons / highlights) */
+  --color-hover: #a7c7e7; /* Sky Blue (hover effects) */
+  --color-text: #0d0630; /* Main text */
+  --color-light: #a7c7e7; /* Secondary background */
 }
 
-* {
-  box-sizing: border-box;
-}
-
+/* General page styling */
 body {
   font-family: Arial, sans-serif;
   background-color: var(--color-bg);
@@ -23,54 +20,63 @@ body {
 .navbar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   background-color: var(--color-card);
-  padding: 12px 20px;
-}
-
-.logo {
-  margin: 0;
-  font-size: 24px;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .nav-links {
-  list-style: none;
-  display: flex;
-  gap: 14px;
-  margin: 0;
-  padding: 0;
+  display: flex;:root {
+  --color-bg: #7c6c77; /* Dusty Mauve (page background) */
+  --color-header: #0d0630; /* Dark Amethyst (header / text) */
+  --color-card: #82aeb1; /* Teal (cards) */
+  --color-accent: #e3b505; /* Saffron (buttons / highlights) */
+  --color-hover: #a7c7e7; /* Sky Blue (hover effects) */
+  --color-text: #0d0630; /* Main text */
+  --color-light: #a7c7e7; /* Secondary background */
 }
 
-.nav-links li {
-  list-style: none;
+/* General page styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--color-bg);
+  margin: 0;
+  padding: 0;
+  color: var(--color-text);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--color-card);
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-between;
 }
 
 .nav-links a {
-  text-decoration: none;
-  color: var(--color-header);
-  font-weight: 500;
+  padding: 5px;
 }
 
-.nav-links a:hover {
-  color: var(--color-accent);
-}
 
 main {
-  max-width: 900px;
-  margin: 0 auto;
   padding: 30px;
 }
 
-h1 {
-  margin-top: 0;
-}
 
 section {
   background-color: var(--color-card);
-  padding: 24px;
+  padding: 20px;
   margin-bottom: 30px;
   border-radius: 10px;
 }
+
 
 form label {
   display: block;
@@ -78,6 +84,7 @@ form label {
   margin-bottom: 5px;
   font-weight: bold;
 }
+
 
 form input {
   width: 100%;
@@ -88,8 +95,8 @@ form input {
   font-size: 14px;
 }
 
-form button,
-#logout-btn {
+
+form button {
   margin-top: 15px;
   padding: 10px;
   width: 100%;
@@ -101,16 +108,66 @@ form button,
   cursor: pointer;
 }
 
-form button:hover,
-#logout-btn:hover {
+
+form button:hover {
   background-color: var(--color-hover);
 }
-
-.msg {
-  font-weight: bold;
-  margin-top: 12px;
+  justify-content: space-between;
 }
 
-.hidden {
+.nav-links a {
+  padding: 5px;
+}
+
+
+main {
+  padding: 30px;
+}
+
+
+section {
+  background-color: var(--color-card);
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+}
+
+
+form label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+
+form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+
+form button {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--color-accent);
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+form button:hover {
+  background-color: var(--color-hover);
+
+  .hidden {
   display: none;
+}
 }
