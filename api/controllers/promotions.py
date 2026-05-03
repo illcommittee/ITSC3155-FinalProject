@@ -37,7 +37,7 @@ def read_one(db: Session, item_id: int):
         return item
     except SQLAlchemyError as e:
         error = str(e.__dict__.get("orig", e))
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Promotion not found")
 
 
 def validate(db: Session, code: str):

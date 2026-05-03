@@ -15,7 +15,7 @@ class Order(Base):
     tracking_num = Column(String(50), nullable=False, unique=True)
     order_status = Column(Boolean, nullable=False)
     total_price = Column(Float, nullable=False)
-    order_details = Column(String(500), nullable=True)
-    order_type = Column(String(50), nullable=False)
+
+
     customer = relationship("Customer", back_populates="orders")
     payment_info = relationship("PaymentInfo", back_populates="order", uselist=False)
