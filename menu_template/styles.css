@@ -480,3 +480,79 @@ button:hover { background: #555; }
   margin-top: 6px;
   min-height: 18px;
 }
+
+/* ── Clickable review count on cards ── */
+.review-count-link {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #666;
+}
+
+.review-count-link:hover {
+  color: var(--color-text);
+}
+
+/* ── View reviews modal ── */
+#view-reviews-modal {
+  border: none;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 420px;
+  max-width: 94vw;
+  max-height: 80vh;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+}
+
+#view-reviews-modal[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+#view-reviews-modal::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+#view-reviews-modal h3 {
+  margin: 0 0 1rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+#reviews-loading {
+  font-size: 13px;
+  color: #888;
+  margin: 0 0 0.5rem;
+}
+
+#reviews-list {
+  overflow-y: auto;
+  flex: 1;
+  margin-bottom: 0.5rem;
+}
+
+.review-item {
+  border-bottom: 1px solid #eee;
+  padding: 0.75rem 0;
+}
+
+.review-item:last-child {
+  border-bottom: none;
+}
+
+.review-item-stars {
+  margin-bottom: 4px;
+}
+
+.review-item-text {
+  font-size: 13px;
+  color: #444;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.no-reviews-msg {
+  font-size: 13px;
+  color: #888;
+  font-style: italic;
+}

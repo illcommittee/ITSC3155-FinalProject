@@ -141,7 +141,9 @@ function renderMenu(items) {
       <p class="price">$${Number(item.menu_price).toFixed(2)}</p>
       <div class="rating-display">
         ${renderStars(ratingInfo?.avg_score ?? null)}
-        <span class="review-count">(${reviewCount} ${reviewCount === 1 ? "review" : "reviews"})</span>
+        ${reviewCount > 0
+          ? `<span class="review-count review-count-link">(${reviewCount} ${reviewCount === 1 ? "review" : "reviews"})</span>`
+          : `<span class="review-count">(0 reviews)</span>`}
       </div>
       <p class="info">${item.calories} cal</p>
       <p class="info">Category: ${escapeHtml(item.category)}</p>
@@ -152,6 +154,11 @@ function renderMenu(items) {
     `;
 
     card.querySelector(".add-btn").addEventListener("click", () => addToOrder(item));
+
+    const reviewCountLink = card.querySelector(".review-count-link");
+    if (reviewCountLink) {
+      reviewCountLink.addEventListener("click", () => openViewReviewsModal(item.id, item.dishes));
+    }
 
     const reviewBtn = card.querySelector(".review-btn");
     if (reviewBtn) {
@@ -437,6 +444,42 @@ async function refreshRatings() {
   }
 }
 
+// ── View reviews modal ────────────────────────────────────────────────────────
+
+async function openViewReviewsModal(resourceId, dishName) {
+  document.getElementById("view-reviews-title").textContent = `Reviews: ${dishName}`;
+  const listEl = document.getElementById("reviews-list");
+  const loadingEl = document.getElementById("reviews-loading");
+
+  listEl.innerHTML = "";
+  loadingEl.textContent = "Loading reviews...";
+
+  document.getElementById("view-reviews-modal").showModal();
+
+  try {
+    const res = await fetch(`${API_BASE}/reviews/?resource_id=${resourceId}`);
+    if (!res.ok) throw new Error("Failed to load reviews");
+    const reviews = await res.json();
+
+    loadingEl.textContent = "";
+
+    if (!reviews.length) {
+      listEl.innerHTML = '<p class="no-reviews-msg">No reviews yet.</p>';
+      return;
+    }
+
+    listEl.innerHTML = reviews.map(r => `
+      <div class="review-item">
+        <div class="review-item-stars">${renderStars(r.score)}</div>
+        <p class="review-item-text">${escapeHtml(r.review_txt)}</p>
+      </div>
+    `).join("");
+  } catch (err) {
+    console.error("Failed to load reviews:", err);
+    loadingEl.textContent = "Failed to load reviews. Please try again.";
+  }
+}
+
 // ── Event listeners ───────────────────────────────────────────────────────────
 
 document.getElementById("checkout-btn").addEventListener("click", showCheckout);
@@ -446,6 +489,10 @@ document.getElementById("pay-btn").addEventListener("click", placeOrder);
 document.getElementById("review-submit-btn").addEventListener("click", submitReview);
 document.getElementById("review-cancel-btn").addEventListener("click", () => {
   document.getElementById("review-modal").close();
+});
+
+document.getElementById("view-reviews-close-btn").addEventListener("click", () => {
+  document.getElementById("view-reviews-modal").close();
 });
 
 // Interactive star hover/click in the review modal.
