@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Customer Account | Inspector Gadget's Restaurant</title>
   <link rel="icon" type="image/png" href="img/favicon48x48.png">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -14,56 +14,68 @@
       <h2 class="logo">Inspector Gadget's Restaurant</h2>
 
       <ul class="nav-links">
-        <a href="../menu_template/menu.html">Menu</a>
-        <a href="../cart_template/cart.html">Cart</a>
-        <a href="../group_bio_template\index.html">About</a>
-        <a href="../group_bio_template\index.html">Orders</a>
-        <a href="../login_template/login.html">Login/Signup</a>
+        <li><a href="../menu_template/menu.html">Menu</a></li>
+        <li><a href="../cart_template/cart.html">Cart</a></li>
+        <li><a href="../group_bio_template/index.html">About</a></li>
+        <li><a href="../orders_template/orders.html">Orders</a></li>
+        <li><a href="../login_template/login.html">Login/Signup</a></li>
       </ul>
     </div>
   </nav>
 
-  <h1>Customer Account</h1>
+  <main>
+    <h1>Customer Account</h1>
+    
+    <section id="signup-section">
+      <h2>Create Account</h2>
 
-  <section>
-    <h2>Create Account</h2>
+      <form id="signup-form">
+        <label for="customer-name">Full Name</label>
+        <input type="text" id="customer-name" placeholder="Full Name" required>
 
-    <form id="signup-form">
-      <label>Enter your Full Name</label>
-      <input type="text" id="customer-name" placeholder="Full Name" required>
-      <label>Enter your Email</label>
-      <input type="email" id="signup-email" placeholder="Email" required>
-      <label>Enter your Phone Number</label>
-      <input type="number" id="phone-num" placeholder="Phone Number" required>
-      <label>Enter your Home Address</label>
-      <input type="text" id="address" placeholder="Address" required>
-      <button type="submit">Create Account</button>
-      <p id="signup-msg" class="msg"></p>
-    </form>
-  </section>
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" placeholder="Email" required>
 
-  <hr>
+        <label for="phone-num">Phone Number</label>
+        <input type="text" id="phone-num" placeholder="Phone Number" required>
 
-  <section>
-    <h2>Login</h2>
+        <label for="address">Home Address</label>
+        <input type="text" id="address" placeholder="Address or Pickup" required>
 
-    <form id="login-form">
-      <label>Email</label>
-      <input type="email" id="login-email" placeholder="Email" required>
-      <label>Password</label>
-      <input type="password" id="login-password" placeholder="Your password" required />
-      <button type="submit">Login</button>
-      <p id="login-msg" class="msg"></p>
-    </form>
-  </section>
+        <label for="signup-password">Create Password</label>
+        <input type="password" id="signup-password" placeholder="Password" required>
 
-   <section id="logged-in-section" class="hidden">
+        <button type="submit">Create Account</button>
+        <p id="signup-msg" class="msg"></p>
+      </form>
+    </section>
+
+    <hr>
+    
+    
+    <section id="login-section">
+      <h2>Login</h2>
+
+      <form id="login-form">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="Email" required>
+
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="Your password" required>
+
+        <button type="submit">Login</button>
+        <p id="login-msg" class="msg"></p>
+      </form>
+    </section>
+
+    <section id="logged-in-section" class="hidden">
       <h2 id="welcome-msg"></h2>
       <p>You have successfully logged in.</p>
       <button id="logout-btn">Logout</button>
     </section>
+  </main>
 
   <script src="script.js"></script>
-  
+
 </body>
 </html>

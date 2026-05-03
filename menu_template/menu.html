@@ -2,59 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Order Display</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu | Inspector Gadget's Restaurant</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- Navbar -->
   <nav>
     <div class="navbar">
       <h2 class="logo">Inspector Gadget's Restaurant</h2>
 
       <ul class="nav-links">
-        <a href="../menu_template/menu.html">Menu</a>
-        <a href="../cart_template/cart.html">Cart</a>
-        <a href="../group_bio_template\index.html">About</a>
-        <a href="../group_bio_template\index.html">Orders</a>
-        <a href="../login_template/login.html">Login/Signup</a>
+        <li><a href="../menu_template/menu.html">Menu</a></li>
+        <li><a href="../cart_template/cart.html">Cart</a></li>
+        <li><a href="../group_bio_template/index.html">About</a></li>
+        <li><a href="../orders_template/orders.html">Orders</a></li>
+        <li><a href="../login_template/login.html">Login/Signup</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- Step 1: Menu -->
-  <section id="menu-section">
-    <h2>Menu</h2>
-    <div id="menu-grid"></div>
-  </section>
+  <main>
+    <section id="menu-section">
+      <h2>Menu</h2>
+      <div id="category-tabs"></div>
+      <div id="menu-grid"></div>
+      <p id="menu-message"></p>
+    </section>
 
-  <!-- Step 2: Current Order -->
-  <section id="order-display">
-    <h2>Current Order</h2>
-    <ul id="order-list"></ul>
-    <p id="order-total">Total: $0.00</p>
-    <button id="checkout-btn">Checkout</button>
-  </section>
+    <section id="order-display">
+      <h2>Current Order</h2>
+      <ul id="order-list"></ul>
+      <p id="order-total">Total: $0.00</p>
+      <button id="checkout-btn">Checkout</button>
+    </section>
 
-  <!-- Step 3: Checkout -->
-  <section id="checkout-section" class="hidden">
-    <h2>Checkout</h2>
+    <section id="checkout-section" class="hidden">
+      <h2>Checkout</h2>
 
-    <label>Order Type</label>
-    <div id="order-type">
-      <label><input type="radio" name="type" value="takeout" checked /> Takeout</label>
-      <label><input type="radio" name="type" value="delivery" /> Delivery</label>
-    </div>
+      <label for="card-name">Customer Name</label>
+      <input type="text" id="card-name" placeholder="Enter your name" required />
 
-    <label for="promo">Promo Code</label>
-    <input type="text" id="promo" placeholder="Enter code (optional)" />
-    <button id="apply-promo">Apply</button>
-    <p id="promo-msg"></p>
+      <label>Order Type</label>
+      <div id="order-type">
+        <label><input type="radio" name="type" value="takeout" checked /> Takeout</label>
+        <label><input type="radio" name="type" value="delivery" /> Delivery</label>
+      </div>
 
-    <p id="checkout-total"></p>
-    <button id="pay-btn">Pay & Place Order</button>
-    <p id="order-status"></p>
-  </section>
+      <label for="payment-type">Payment Type</label>
+      <select id="payment-type">
+        <option value="Credit Card">Credit Card</option>
+        <option value="Debit Card">Debit Card</option>
+        <option value="PayPal">PayPal</option>
+      </select>
+
+      <label for="promo">Promo Code</label>
+      <input type="text" id="promo" placeholder="Enter code, e.g. SAVE10" />
+      <button id="apply-promo" type="button">Apply</button>
+      <p id="promo-msg"></p>
+
+      <p id="checkout-total"></p>
+      <button id="pay-btn" type="button">Pay & Place Order</button>
+      <p id="order-status"></p>
+    </section>
+  </main>
 
   <script src="script.js"></script>
 </body>

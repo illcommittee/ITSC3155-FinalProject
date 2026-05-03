@@ -1,14 +1,17 @@
 :root {
-  --color-bg: #7c6c77; /* Dusty Mauve (page background) */
-  --color-header: #0d0630; /* Dark Amethyst (header / text) */
-  --color-card: #82aeb1; /* Teal (cards) */
-  --color-accent: #e3b505; /* Saffron (buttons / highlights) */
-  --color-hover: #a7c7e7; /* Sky Blue (hover effects) */
-  --color-text: #0d0630; /* Main text */
-  --color-light: #a7c7e7; /* Secondary background */
+  --color-bg: #7c6c77;
+  --color-header: #0d0630;
+  --color-card: #82aeb1;
+  --color-accent: #e3b505;
+  --color-hover: #a7c7e7;
+  --color-text: #0d0630;
+  --color-light: #a7c7e7;
 }
 
-/* General page styling */
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, sans-serif;
   background-color: var(--color-bg);
@@ -22,79 +25,110 @@ body {
   justify-content: space-between;
   background-color: var(--color-card);
   align-items: center;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 12px 20px;
+}
+
+.logo {
+  margin: 0;
+  font-size: 20px;
 }
 
 .nav-links {
+  list-style: none;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  list-style: none;
 }
 
 .nav-links a {
-  padding: 5px;
+  text-decoration: none;
+  color: var(--color-header);
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: var(--color-accent);
+}
+
+main {
+  width: 90%;
+  max-width: 1100px;
+  margin: 30px auto;
 }
 
 .container {
-  width: 80%;
-  margin: 20px auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  gap: 20px;
 }
 
-/* Card styling for individual team bios */
 .card {
   background: var(--color-card);
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  margin: 10px;
-  padding: 20px;
-  flex: 1 1 calc(30% - 40px);
-  text-align: center;
+  padding: 22px;
+  flex: 1 1 300px;
   transition:
     transform 0.2s,
     box-shadow 0.2s;
 }
 
 .card:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
-.avatar {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  margin: 10px 0;
-  border: 3px solid var(--color-accent);
-}
-
-.avatar:hover {
-  transform: scale(1.05);
-  transition: 0.2s;
-}
-
-/* Initially hide bio details */
-.bio {
-  background: var(--color-accent);
-  color: var(--color-header);
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  display: none;
-}
-
-/* Button styling */
 button {
-  background: #007bff;
-  color: white;
+  background: var(--color-accent);
+  color: black;
   border: none;
   padding: 10px 15px;
+  margin-top: 10px;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
 }
 
 button:hover {
   background: var(--color-hover);
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.details-panel {
+  display: none;
+  margin-top: 16px;
+  background: white;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.order-record {
+  background: #f8f8f8;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.order-record h3 {
+  margin-top: 0;
+}
+
+pre {
+  white-space: pre-wrap;
+  font-family: Arial, sans-serif;
+  margin: 0;
 }
