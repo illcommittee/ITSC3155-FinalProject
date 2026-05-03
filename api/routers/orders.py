@@ -11,18 +11,6 @@ router = APIRouter(
     prefix="/orders"
 )
 
-# The routers for the orders table.
-# Viewable by the FastAPI app reload in the terminal!
-
-@router.get("/revenue")
-def revenue(target_date: Optional[date] = None, db: Session = Depends(get_db)):
-    return controller.get_revenue(db, target_date)
-
-
-@router.get("/track/{tracking_num}", response_model=schema.Order)
-def track(tracking_num: str, db: Session = Depends(get_db)):
-    return controller.read_by_tracking(db, tracking_num)
-
 
 @router.post("/", response_model=schema.Order)
 def create(request: schema.OrderCreate, db: Session = Depends(get_db)):
