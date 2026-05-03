@@ -23,7 +23,6 @@ class CustomerUpdate(BaseModel):
 
 class CustomerLogin(BaseModel):
     email: str
-    password: str
 
 
 class Customer(CustomerBase):
