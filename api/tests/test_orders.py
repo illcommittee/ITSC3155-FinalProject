@@ -10,7 +10,7 @@ def test_create_order():
         "customer_name": "John Doe",
         "tracking_num": "TRACK2001",
         "order_status": False,
-        "total_price": 12.99,
+        "total_price": 8.99,
         "order_details": "Chicken Sandwich",
         "order_type": "takeout",
     }
@@ -22,6 +22,6 @@ def test_create_order():
     assert order_object.customer_name == "John Doe"
     assert order_object.tracking_num == "TRACK2001"
     assert order_object.order_status is False
-    assert order_object.total_price == 12.99
+    assert order_object.total_price == 8.99
     assert order_object.order_details == "Chicken Sandwich"
     assert order_object.order_type == "takeout"

@@ -17,7 +17,7 @@ def db_session(mocker):
 def test_create_promotion(db_session):
     # Create a sample promotion
     promotion_data = {
-        "promo_code": "SUMMER25",
+        "promo_code": "SUMMER26",
         "discount_percent": 15.0,
         "expiration_date": datetime(2026, 12, 31, 23, 59, 59)
     }
@@ -31,5 +31,5 @@ def test_create_promotion(db_session):
 
     # Assertions
     assert created_promotion is not None
-    assert created_promotion.promo_code == "SUMMER25"
+    assert created_promotion.promo_code == "SUMMER26"
     assert created_promotion.expiration_date == datetime(2026, 12, 31, 23, 59, 59)

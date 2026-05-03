@@ -18,8 +18,8 @@ def test_create_review(db_session):
     review_data = {
         "customer_id": 1,
         "resource_id": 1,
-        "review_txt": "Great food and excellent service, will definitely come back!",
-        "score": 5
+        "review_txt": "Great food, but my server was kinda rude... will come back on a better day.",
+        "score": 4
     }
 
     # Handles desyncs between models/controllers
@@ -32,5 +32,5 @@ def test_create_review(db_session):
     # Assertions
     assert created_review is not None
     assert created_review.customer_id == 1
-    assert created_review.review_txt == "Great food and excellent service, will definitely come back!"
-    assert created_review.score == 5
+    assert created_review.review_txt == "Great food, but my server was kinda rude... will come back on a better day."
+    assert created_review.score == 4

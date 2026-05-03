@@ -17,12 +17,12 @@ def db_session(mocker):
 def test_create_resource(db_session):
     # Create a sample resource
     resource_data = {
-        "dishes": "Grilled Salmon",
-        "ingredients": "Salmon, Olive Oil, Garlic, Lemon, Rosemary",
+        "dishes": "Veggie Wrap",
+        "ingredients": "Tortilla, lettuce, tomato, cucumber, hummus",
         "resource_amount": "2 lbs",
-        "menu_price": 18.99,
-        "calories": 450,
-        "allergens": "Fish",
+        "menu_price": 7.49,
+        "calories": 430,
+        "allergens": "gluten",
         "category": "Seafood",
         "image_url": "https://example.com/grilled-salmon.jpg"
     }
@@ -36,9 +36,9 @@ def test_create_resource(db_session):
 
     # Assertions
     assert created_resource is not None
-    assert created_resource.dishes == "Grilled Salmon"
-    assert created_resource.ingredients == "Salmon, Olive Oil, Garlic, Lemon, Rosemary"
+    assert created_resource.dishes == "Veggie Wrap"
+    assert created_resource.ingredients == "Tortilla, lettuce, tomato, cucumber, hummus"
     assert created_resource.resource_amount == "2 lbs"
-    assert created_resource.menu_price == 18.99
-    assert created_resource.calories == 450
-    assert created_resource.allergens == "Fish"
+    assert created_resource.menu_price == 7.49
+    assert created_resource.calories == 430
+    assert created_resource.allergens == "gluten"
