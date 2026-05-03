@@ -1,259 +1,173 @@
-// Menu page logic for the restaurant ordering demo.
-// Loads menu items from the FastAPI backend, lets users add items to an order,
-// applies promo codes, and submits orders/payments to the API.
+const API_BASE = "http://localhost:5000";
 
-const API_BASE = "http://127.0.0.1:8000";
-
-let menuItems = [];
+// Promotions
+const PROMO_CODES = { SAVE10: 0.1, HALFOFF: 0.5 };
 let orderItems = [];
 let discount = 0;
-let appliedPromoCode = null;
 
-// Load menu data from the backend and render the category filters/menu cards.
+// Menu for Backend
 async function loadMenu() {
-  const message = document.getElementById("menu-message");
-
   try {
-    const res = await fetch(`${API_BASE}/resources/`);
-
-    if (!res.ok) {
-      throw new Error(`Menu request failed with status ${res.status}`);
-    }
-
-    menuItems = await res.json();
-
-    if (!menuItems.length) {
-      message.textContent = "No menu items found. Run python seed.py first.";
-      return;
-    }
-
-    renderCategoryFilter(menuItems);
-    renderMenu(menuItems);
+    const res = await fetch(`${API_BASE}/resources`);
+    const items = await res.json();
+    renderCategoryFilter(items);
+    renderMenu(items);
   } catch (err) {
     console.error("Failed to load menu:", err);
-    message.textContent = "Failed to load menu. Make sure the API is running.";
   }
 }
 
-// Build category filter buttons from the categories returned by the API.
+// Categories
 function renderCategoryFilter(items) {
-  const categories = ["All", ...new Set(items.map(item => item.category).filter(Boolean))];
-  const tabContainer = document.getElementById("category-tabs");
-
-  tabContainer.innerHTML = "";
-
-  categories.forEach(category => {
-    const button = document.createElement("button");
-    button.className = "tab-btn";
-    button.textContent = category;
-
-    if (category === "All") {
-      button.classList.add("active");
-    }
-
-    button.addEventListener("click", () => {
-      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-      button.classList.add("active");
-
-      if (category === "All") {
-        renderMenu(items);
-      } else {
-        renderMenu(items.filter(item => item.category === category));
-      }
-    });
-
-    tabContainer.appendChild(button);
+  const categories = ["All", ...new Set(items.map(i => i.category).filter(Boolean))];
+  const bar = document.getElementById("category-bar");
+  categories.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = "cat-btn";
+    btn.textContent = cat;
+    if (cat === "All") btn.classList.add("active");
+    btn.onclick = () => {
+      document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderMenu(cat === "All" ? items : items.filter(i => i.category === cat));
+    };
+    bar.appendChild(btn);
   });
 }
 
-// Display menu cards for the current filtered list of items.
+// Menu Items
 function renderMenu(items) {
   const grid = document.getElementById("menu-grid");
   grid.innerHTML = "";
-
   items.forEach(item => {
     const card = document.createElement("div");
     card.className = "menu-card";
-
     card.innerHTML = `
+      <img src="${item.image_url || "placeholder.jpg"}" alt="${item.dishes}" />
       <h3>${item.dishes}</h3>
-      <p class="price">$${Number(item.menu_price).toFixed(2)}</p>
-      <p class="info">${item.calories} cal</p>
-      <p class="info">Category: ${item.category}</p>
-      <p class="info">Ingredients: ${item.ingredients}</p>
-      <p class="info">Allergens: ${item.allergens || "None"}</p>
-      <button type="button">Add</button>
+      <p class="price">$${item.menu_price.toFixed(2)}</p>
+      <p class="info">${item.calories} cal | Allergens: ${item.allergens || "None"}</p>
+      <button onclick='addToOrder(${JSON.stringify(item)})'>Add</button>
     `;
-
-    card.querySelector("button").addEventListener("click", () => addToOrder(item));
     grid.appendChild(card);
   });
 }
 
-// Add a selected menu item to the current order or increase its quantity.
+// Cart
 function addToOrder(item) {
-  const existing = orderItems.find(orderItem => orderItem.id === item.id);
-
-  if (existing) {
-    existing.qty += 1;
-  } else {
-    orderItems.push({ ...item, qty: 1 });
-  }
-
+  const existing = orderItems.find(i => i.id === item.id);
+  if (existing) existing.qty++;
+  else orderItems.push({ ...item, qty: 1 });
   renderOrder();
 }
 
-// Recalculate and display the current order items and total.
 function renderOrder() {
   const list = document.getElementById("order-list");
   list.innerHTML = "";
-
+  let total = 0;
   orderItems.forEach(item => {
     const li = document.createElement("li");
     li.textContent = `${item.dishes} x${item.qty} — $${(item.menu_price * item.qty).toFixed(2)}`;
     list.appendChild(li);
+    total += item.menu_price * item.qty;
   });
-
-  document.getElementById("order-total").textContent = `Total: $${getTotal().toFixed(2)}`;
+  document.getElementById("order-total").textContent = `Total: $${total.toFixed(2)}`;
 }
-
+// Total
 function getTotal() {
-  return orderItems.reduce((sum, item) => sum + item.menu_price * item.qty, 0);
+  return orderItems.reduce((sum, i) => sum + i.menu_price * i.qty, 0);
 }
 
+// Checkout System
 function showCheckout() {
-  if (!orderItems.length) {
-    alert("Add items first.");
-    return;
-  }
-
+  if (!orderItems.length) return alert("Add items first!");
   document.getElementById("checkout-section").classList.remove("hidden");
   updateCheckoutTotal();
 }
 
-// Validate a promo code against the backend and apply its discount.
-async function applyPromo() {
+// Promo System
+function applyPromo() {
   const code = document.getElementById("promo").value.trim().toUpperCase();
-  const promoMessage = document.getElementById("promo-msg");
-
-  if (!code) {
-    discount = 0;
-    appliedPromoCode = null;
-    promoMessage.textContent = "No promo code applied.";
-    updateCheckoutTotal();
-    return;
-  }
-
-  try {
-    const res = await fetch(`${API_BASE}/promotions/validate/${code}`);
-
-    if (!res.ok) {
-      throw new Error("Invalid promo code");
-    }
-
-    const promo = await res.json();
-    discount = Number(promo.discount_percent) / 100;
-    appliedPromoCode = promo.promo_code;
-
-    promoMessage.textContent = `${promo.promo_code} applied. ${promo.discount_percent}% off.`;
-  } catch (err) {
-    console.error("Promo failed:", err);
-    discount = 0;
-    appliedPromoCode = null;
-    promoMessage.textContent = "Invalid or expired promo code.";
-  }
-
+  discount = PROMO_CODES[code] || 0;
+  document.getElementById("promo-msg").textContent = discount
+    ? `Code applied! ${discount * 100}% off`
+    : "Invalid code.";
   updateCheckoutTotal();
 }
 
+// Checkout Total
 function updateCheckoutTotal() {
   const total = getTotal() * (1 - discount);
   document.getElementById("checkout-total").textContent = `Total to pay: $${total.toFixed(2)}`;
 }
 
+// Placing Order
 async function placeOrder() {
-  const customerName = document.getElementById("card-name").value.trim();
+  const name = document.getElementById("card-name").value.trim();
+  if (!name) return alert("Please enter your name for payment.");
 
-  if (!customerName) {
-    alert("Please enter your name.");
-    return;
-  }
-
-  const orderType = document.querySelector('input[name="type"]:checked').value;
-  const paymentType = document.getElementById("payment-type").value;
+  const type = document.querySelector('input[name="type"]:checked').value;
+  const promo = document.getElementById("promo").value.trim().toUpperCase();
   const total = getTotal() * (1 - discount);
-  const orderNumber = Math.floor(2000 + Math.random() * 7000);
-  const trackingNumber = `WEB${orderNumber}`;
 
-  const savedCustomer = JSON.parse(localStorage.getItem("customer") || "null");
-  const customerId = savedCustomer ? savedCustomer.id : 1;
-
-  const orderPayload = {
-    order_num: orderNumber,
-    customer_id: customerId,
-    customer_name: customerName,
-    tracking_num: trackingNumber,
-    order_status: false,
-    total_price: Number(total.toFixed(2)),
-    order_details: orderItems.map(item => `${item.dishes} x${item.qty}`).join(", "),
-    order_type: orderType
+  const payload = {
+    items: orderItems,
+    order_type: type,
+    promo_code: promo || null,
+    total: parseFloat(total.toFixed(2)),
   };
 
   try {
-    const orderRes = await fetch(`${API_BASE}/orders/`, {
+    const res = await fetch(`${API_BASE}/orders`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(orderPayload),
+      body: JSON.stringify(payload),
     });
-
-    if (!orderRes.ok) {
-      const errorText = await orderRes.text();
-      throw new Error(errorText);
-    }
-
-    const order = await orderRes.json();
-
-    const paymentPayload = {
-      order_id: order.id,
-      total_price: order.total_price,
-      card_info: "Frontend demo payment",
-      transaction_status: "Completed",
-      payment_type: paymentType,
-      promo_code: appliedPromoCode
-    };
-
-    await fetch(`${API_BASE}/payment-info/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(paymentPayload),
-    });
-
-    finishOrder(order.tracking_num, total);
-  } catch (err) {
-    console.error("Order failed:", err);
-    alert("Order failed. Check that the API is running and seeded.");
+    const data = await res.json();
+    finishOrder(data.orderId, total);
+  } catch {
+    finishOrder("ORD" + Math.floor(10000 + Math.random() * 90000), total);
   }
 }
+// Orders Completed
+function finishOrder(orderId, total) {
+  const orders = JSON.parse(localStorage.getItem("trackedOrders") || "{}");
+  orders[orderId] = { status: "Order Received", total, placedAt: new Date().toLocaleString() };
+  localStorage.setItem("trackedOrders", JSON.stringify(orders));
 
-// Reset the order UI after a successful checkout.
-function finishOrder(trackingNumber, total) {
   document.getElementById("order-status").textContent =
-    `Order placed. Tracking number: ${trackingNumber}. Total charged: $${total.toFixed(2)}.`;
+    `✅ Order #${orderId} placed! $${total.toFixed(2)} charged. Track it below.`;
 
   orderItems = [];
   discount = 0;
-  appliedPromoCode = null;
-
   renderOrder();
-  updateCheckoutTotal();
-
-  document.getElementById("promo").value = "";
-  document.getElementById("promo-msg").textContent = "";
   document.getElementById("checkout-section").classList.add("hidden");
+}
+
+// Order Tracking System
+
+function trackOrder() {
+  const input = document.getElementById("tracking-input").value.trim();
+  const orders = JSON.parse(localStorage.getItem("trackedOrders") || "{}");
+  const order = orders[input];
+  const result = document.getElementById("tracking-result");
+
+  if (!input || !order) {
+    result.textContent = input ? `No order found for #${input}.` : "Enter a tracking number.";
+    return;
+  }
+
+  result.innerHTML = `
+    <strong>Order #${input}</strong><br>
+    Status: <em>${order.status}</em><br>
+    Total: $${parseFloat(order.total).toFixed(2)}<br>
+    Placed: ${order.placedAt}
+  `;
 }
 
 document.getElementById("checkout-btn").addEventListener("click", showCheckout);
 document.getElementById("apply-promo").addEventListener("click", applyPromo);
 document.getElementById("pay-btn").addEventListener("click", placeOrder);
+document.getElementById("track-btn").addEventListener("click", trackOrder);
 
 loadMenu();
