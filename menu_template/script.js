@@ -121,6 +121,7 @@ function getTotal() {
   return orderItems.reduce((sum, item) => sum + item.menu_price * item.qty, 0);
 }
 
+// Displaying what's in the checkout
 function showCheckout() {
   if (!orderItems.length) {
     alert("Add items first.");
