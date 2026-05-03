@@ -48,6 +48,21 @@
       </div>
 
       <div class="card">
+        <h2>Orders by Date Range</h2>
+        <p>Filter orders between two dates.</p>
+
+        <label for="range-start">Start Date</label>
+        <input type="date" id="range-start">
+        <label for="range-end">End Date</label>
+        <input type="date" id="range-end">
+        <button onclick="toggleSection('date-range-panel'); searchByDateRange()">Search Orders</button>
+
+        <div id="date-range-panel" class="details-panel">
+          <div id="date-range-results">Enter a date range to search.</div>
+        </div>
+      </div>
+
+      <div class="card">
         <h2>Revenue by Date</h2>
         <p>View total revenue for a selected date.</p>
 

@@ -66,6 +66,23 @@
     </section>
   </main>
 
+  <dialog id="review-modal">
+    <h3 id="review-modal-title">Write a Review</h3>
+    <div id="star-selector">
+      <button class="star-btn" data-star="1">★</button>
+      <button class="star-btn" data-star="2">★</button>
+      <button class="star-btn" data-star="3">★</button>
+      <button class="star-btn" data-star="4">★</button>
+      <button class="star-btn" data-star="5">★</button>
+    </div>
+    <textarea id="review-text" placeholder="Share your thoughts about this dish..." rows="4"></textarea>
+    <div class="modal-actions">
+      <button id="review-submit-btn" type="button">Submit Review</button>
+      <button id="review-cancel-btn" type="button" class="btn-secondary">Cancel</button>
+    </div>
+    <p id="review-msg"></p>
+  </dialog>
+
   <script src="script.js"></script>
 </body>
 </html>

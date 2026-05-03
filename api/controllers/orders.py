@@ -62,6 +62,16 @@ def read_one(db: Session, item_id):
     return item
 
 
+def read_by_customer(db: Session, customer_id: int):
+    try:
+        return db.query(model.Order).filter(
+            model.Order.customer_id == customer_id
+        ).order_by(model.Order.order_date.desc()).all()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
+
 def read_by_tracking(db: Session, tracking_num: str):
     item = db.query(model.Order).filter(model.Order.tracking_num == tracking_num).first()
     if not item:

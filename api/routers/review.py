@@ -26,6 +26,11 @@ def top_dishes(db: Session = Depends(get_db)):
     return controller.top_dishes(db=db)
 
 
+@router.get("/customer/{customer_id}/resource/{resource_id}")
+def get_customer_review(customer_id: int, resource_id: int, db: Session = Depends(get_db)):
+    return controller.get_customer_review(db=db, customer_id=customer_id, resource_id=resource_id)
+
+
 @router.get("/{item_id}", response_model=schema.Review)
 def read_one(item_id: int, db: Session = Depends(get_db)):
     return controller.read_one(db, item_id=item_id)
