@@ -14,8 +14,8 @@ def create(request: schema.ResourceCreate, db: Session = Depends(get_db)):
     return controller.create(db=db, request=request)
 
 @router.get("/", response_model=list[schema.Resource])
-def read_all(category: str | None = None, db: Session = Depends(get_db)):
-    return controller.read_all(db=db, category=category)
+def read_all(db: Session = Depends(get_db)):
+    return controller.read_all(db)
 
 @router.get("/{item_id}", response_model=schema.Resource)
 def read_one(item_id: int, db: Session = Depends(get_db)):

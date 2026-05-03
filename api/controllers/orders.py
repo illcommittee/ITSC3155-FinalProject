@@ -20,13 +20,14 @@ def _next_order_num(db: Session) -> int:
 def create(db: Session, request):
     new_item = model.Order(
         order_num=request.order_num,
-        customer_id=request.customer_id,
         customer_name=request.customer_name,
-        tracking_num=request.tracking_num,
+        customer_id=request.customer_id,
+        order_date=datetime.now(),
+        tracking_num=request._gen_tracking(),
         order_status=request.order_status,
-        total_price=request.total_price,
-        order_details=request.order_details,
         order_type=request.order_type,
+        dish_names=request.dish_names,
+        total_price=request.total_price,
     )
     try:
         db.add(new_item)

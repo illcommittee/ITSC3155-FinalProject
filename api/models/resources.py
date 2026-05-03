@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, DATETIME, Float
+from sqlalchemy import Column, ForeignKey, Integer, String, DECIMAL, DATETIME, Float
+from sqlalchemy.orm import relationship
 from datetime import datetime
 from ..dependencies.database import Base
 
@@ -13,5 +14,4 @@ class Resource(Base):
     menu_price = Column(Float, nullable=False)
     calories = Column(Integer, nullable=False)
     allergens = Column(String(200), nullable=True)
-    category = Column(String(100), nullable=False)
     order_date = Column(DATETIME, default=datetime.now, nullable=False)

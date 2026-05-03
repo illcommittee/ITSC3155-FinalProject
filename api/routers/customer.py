@@ -37,4 +37,4 @@ def delete(item_id: int, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=schema.Customer)
 def login(request: schema.CustomerLogin, db: Session = Depends(get_db)):
-    return controller.login(db=db, email=request.email, password=request.password)
+    return controller.login(db=db, email=request.email)
