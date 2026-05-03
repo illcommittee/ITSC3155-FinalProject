@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Dashboard | Inspector Gadget's Restaurant</title>
+  <link rel="stylesheet" href="../menu_template/styles.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <nav>
+    <div class="navbar">
+      <h2 class="logo">Inspector Gadget's Restaurant</h2>
+      <ul class="nav-links">
+        <li><a href="../menu_template/menu.html">Menu</a></li>
+        <li><a href="../group_bio_template/index.html">About</a></li>
+        <li><a href="../orders_template/orders.html">Orders</a></li>
+        <li><a href="staff.html">Staff Dashboard</a></li>
+        <li><button id="logout-btn" class="nav-logout-btn">Logout</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section id="staff-panel">
+      <h2>Staff Dashboard</h2>
+      <p id="staff-greeting"></p>
+
+      <div id="staff-tabs">
+        <button class="staff-tab-btn active" data-tab="menu-mgmt">Menu Management</button>
+        <button class="staff-tab-btn" data-tab="alerts">Ingredient Alerts</button>
+        <button class="staff-tab-btn" data-tab="promos">Promo Management</button>
+      </div>
+
+      <!-- ── Menu Management ── -->
+      <div id="tab-menu-mgmt" class="staff-tab-content">
+        <h3>Menu Items</h3>
+        <div class="table-wrap">
+          <table id="menu-table">
+            <thead>
+              <tr>
+                <th>Dish</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <h3 id="menu-form-title">Add Menu Item</h3>
+        <form id="menu-form" class="staff-form">
+          <div class="form-row">
+            <label>Dish Name<input id="f-dishes" required /></label>
+            <label>Category<input id="f-category" required /></label>
+          </div>
+          <div class="form-row">
+            <label>Price ($)<input type="number" step="0.01" min="0" id="f-price" required /></label>
+            <label>Calories<input type="number" min="0" id="f-calories" required /></label>
+          </div>
+          <label>Ingredients<input id="f-ingredients" placeholder="e.g. Chicken, bun, pickles" required /></label>
+          <label>Allergens<input id="f-allergens" placeholder="e.g. gluten, dairy (leave blank if none)" /></label>
+          <label>Stock (units)<input type="number" min="0" id="f-stock" value="0" required /></label>
+          <div class="form-actions">
+            <button type="submit">Save Item</button>
+            <button type="button" id="menu-form-cancel" class="btn-secondary">Cancel</button>
+          </div>
+          <p id="menu-form-msg" class="form-msg"></p>
+        </form>
+      </div>
+
+      <!-- ── Ingredient Alerts ── -->
+      <div id="tab-alerts" class="staff-tab-content hidden">
+        <h3>Stock Status</h3>
+        <div id="stock-alerts"><p class="loading-msg">Loading...</p></div>
+        <h3>Pending Orders with Ingredient Issues</h3>
+        <div id="order-alerts"><p class="loading-msg">Loading...</p></div>
+      </div>
+
+      <!-- ── Promo Management ── -->
+      <div id="tab-promos" class="staff-tab-content hidden">
+        <h3>Promotional Codes</h3>
+        <div class="table-wrap">
+          <table id="promo-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Discount</th>
+                <th>Expires</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <h3 id="promo-form-title">Add Promo Code</h3>
+        <form id="promo-form" class="staff-form">
+          <div class="form-row">
+            <label>Promo Code<input id="p-code" placeholder="e.g. SAVE10" required /></label>
+            <label>Discount %<input type="number" step="0.1" min="0" max="100" id="p-discount" required /></label>
+          </div>
+          <label>Expiration Date<input type="datetime-local" id="p-expires" required /></label>
+          <div class="form-actions">
+            <button type="submit">Save Promo</button>
+            <button type="button" id="promo-form-cancel" class="btn-secondary">Cancel</button>
+          </div>
+          <p id="promo-form-msg" class="form-msg"></p>
+        </form>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

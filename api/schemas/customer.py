@@ -28,6 +28,7 @@ class CustomerLogin(BaseModel):
 
 class Customer(CustomerBase):
     id: int
+    is_staff: bool = False
 
     class Config:
         from_attributes = True

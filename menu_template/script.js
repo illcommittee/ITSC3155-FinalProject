@@ -17,6 +17,10 @@ let ratingsMap = {};
 
 const customer = JSON.parse(localStorage.getItem("customer") || "null");
 
+if (customer?.is_staff) {
+  document.getElementById("staff-nav-item").style.display = "";
+}
+
 // State for the currently open review modal.
 let activeReview = null; // { resourceId, existingReviewId | null }
 

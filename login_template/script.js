@@ -88,7 +88,9 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
     showLoggedIn(user);
 
     setTimeout(() => {
-      window.location.href = "../menu_template/menu.html";
+      window.location.href = user.is_staff
+        ? "../staff_template/staff.html"
+        : "../menu_template/menu.html";
     }, 700);
   } catch (error) {
     console.error("Login failed:", error);
