@@ -6,7 +6,7 @@ from pydantic import BaseModel
 
 class OrderBase(BaseModel):
     order_num: int
-    customer_id: int
+    customer_id: Optional[int] = None
     customer_name: str
     tracking_num: str
     order_status: bool

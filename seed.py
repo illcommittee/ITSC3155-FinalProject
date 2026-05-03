@@ -34,6 +34,14 @@ def migrate_schema():
             print("Added is_staff column to customer table.")
         except Exception:
             pass  # Column already exists
+        try:
+            conn.execute(text(
+                "ALTER TABLE orders MODIFY COLUMN customer_id INT NULL"
+            ))
+            conn.commit()
+            print("Made orders.customer_id nullable for guest support.")
+        except Exception:
+            pass  # Already nullable or column unchanged
 
 
 def seed_database():

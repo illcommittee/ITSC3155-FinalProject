@@ -24,19 +24,21 @@ def _deduct_stock(db: Session, order_details: str):
 
     Handles both 'Dish Name x2' (frontend format) and 'Dish Name' (no qty).
     Stock is clamped to 0 and never goes negative.
+    Uses no_autoflush to avoid premature session flushes mid-transaction.
     """
     if not order_details:
         return
-    for part in order_details.split(", "):
-        part = part.strip()
-        match = re.match(r'^(.+?)\s+x(\d+)$', part)
-        dish_name = match.group(1).strip() if match else part
-        qty = int(match.group(2)) if match else 1
+    with db.no_autoflush:
+        for part in order_details.split(", "):
+            part = part.strip()
+            match = re.match(r'^(.+?)\s+x(\d+)$', part)
+            dish_name = match.group(1).strip() if match else part
+            qty = int(match.group(2)) if match else 1
 
-        resource = db.query(Resource).filter(Resource.dishes == dish_name).first()
-        if resource:
-            current = int(resource.resource_amount) if resource.resource_amount.isdigit() else 0
-            resource.resource_amount = str(max(0, current - qty))
+            resource = db.query(Resource).filter(Resource.dishes == dish_name).first()
+            if resource:
+                current = int(resource.resource_amount) if resource.resource_amount.isdigit() else 0
+                resource.resource_amount = str(max(0, current - qty))
 
 
 def create(db: Session, request):

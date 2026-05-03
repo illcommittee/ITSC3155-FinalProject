@@ -265,7 +265,7 @@ async function placeOrder() {
   const orderNumber = Math.floor(2000 + Math.random() * 7000);
   const trackingNumber = `WEB${orderNumber}`;
 
-  const customerId = customer ? customer.id : 1;
+  const customerId = customer ? customer.id : null;
 
   const orderPayload = {
     order_num: orderNumber,
