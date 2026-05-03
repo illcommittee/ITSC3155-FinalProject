@@ -63,6 +63,64 @@ async function allOrders() {
   }
 }
 
+async function searchByDateRange() {
+  const startInput = document.getElementById("range-start");
+  const endInput = document.getElementById("range-end");
+  const resultsContainer = document.getElementById("date-range-results");
+
+  const startDate = startInput.value;
+  const endDate = endInput.value;
+
+  if (!startDate && !endDate) {
+    resultsContainer.textContent = "Please select at least one date.";
+    return;
+  }
+
+  resultsContainer.textContent = "Loading orders...";
+
+  try {
+    const params = new URLSearchParams();
+    if (startDate) params.append("start_date", `${startDate}T00:00:00`);
+    if (endDate) params.append("end_date", `${endDate}T23:59:59`);
+
+    const response = await fetch(`${API_URL}/orders/?${params}`);
+
+    if (!response.ok) {
+      throw new Error(`Could not load orders. Status: ${response.status}`);
+    }
+
+    const orders = await response.json();
+
+    if (orders.length === 0) {
+      resultsContainer.textContent = "No orders found in that date range.";
+      return;
+    }
+
+    resultsContainer.innerHTML = "";
+
+    orders.forEach(order => {
+      const orderCard = document.createElement("div");
+      orderCard.className = "order-record";
+
+      orderCard.innerHTML = `
+        <h3>Order #${order.order_num}</h3>
+        <p><strong>Customer:</strong> ${order.customer_name}</p>
+        <p><strong>Tracking Number:</strong> ${order.tracking_num}</p>
+        <p><strong>Status:</strong> ${order.order_status ? "Completed" : "In Progress"}</p>
+        <p><strong>Order Type:</strong> ${order.order_type}</p>
+        <p><strong>Details:</strong> ${order.order_details || "No details listed"}</p>
+        <p><strong>Total:</strong> $${Number(order.total_price).toFixed(2)}</p>
+        <p><strong>Date:</strong> ${order.order_date}</p>
+      `;
+
+      resultsContainer.appendChild(orderCard);
+    });
+  } catch (error) {
+    console.error("Error loading orders by date range:", error);
+    resultsContainer.textContent = "Unable to load orders. Make sure the API is running.";
+  }
+}
+
 /**
  * Uses the tracking number endpoint to find a specific order.
  * Customers can use this to check the status and details of their order.

@@ -31,6 +31,11 @@ def read_by_tracking(tracking_num: str, db: Session = Depends(get_db)):
     return controller.read_by_tracking(db=db, tracking_num=tracking_num)
 
 
+@router.get("/customer/{customer_id}", response_model=list[schema.Order])
+def read_by_customer(customer_id: int, db: Session = Depends(get_db)):
+    return controller.read_by_customer(db=db, customer_id=customer_id)
+
+
 @router.get("/revenue/")
 def get_revenue(target_date: date | None = None, db: Session = Depends(get_db)):
     return controller.get_revenue(db=db, target_date=target_date)

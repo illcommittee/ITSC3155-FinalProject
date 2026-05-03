@@ -365,3 +365,118 @@ button:hover { background: #555; }
   font-size: 13px;
   margin-top: 8px;
 }
+
+/* ── Ratings on menu cards ── */
+.rating-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 4px 0 6px;
+  font-size: 13px;
+}
+
+.stars {
+  color: var(--color-accent);
+  letter-spacing: 1px;
+  font-size: 14px;
+}
+
+.rating-score {
+  font-weight: 600;
+  color: #555;
+  font-size: 12px;
+}
+
+.review-count {
+  color: #999;
+  font-size: 11px;
+}
+
+.no-rating {
+  color: #bbb;
+  font-size: 11px;
+  font-style: italic;
+}
+
+.review-btn {
+  background: var(--color-accent);
+  color: #000;
+  font-size: 12px;
+  padding: 5px 12px;
+  margin-top: 6px;
+}
+
+.review-btn:hover {
+  background: #c99b04;
+}
+
+/* ── Review modal (native <dialog>) ── */
+#review-modal {
+  border: none;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 360px;
+  max-width: 94vw;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+}
+
+#review-modal::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+#review-modal h3 {
+  margin: 0 0 1rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+}
+
+/* Star selector inside modal */
+#star-selector {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.star-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  transition: color 0.15s, transform 0.1s;
+}
+
+.star-btn:hover { background: none; }
+
+.star-btn.selected,
+.star-btn.hovered {
+  color: var(--color-accent);
+}
+
+.star-btn.hovered {
+  transform: scale(1.15);
+}
+
+#review-text {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  margin-bottom: 0.5rem;
+}
+
+#review-msg {
+  font-size: 12px;
+  color: #2a7a2a;
+  margin-top: 6px;
+  min-height: 18px;
+}

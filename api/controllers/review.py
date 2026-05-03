@@ -75,6 +75,17 @@ def top_dishes(db: Session):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     
 
+def get_customer_review(db: Session, customer_id: int, resource_id: int):
+    try:
+        return db.query(model.Review).filter(
+            model.Review.customer_id == customer_id,
+            model.Review.resource_id == resource_id
+        ).first()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__.get("orig", e))
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
+
 def update(db: Session, item_id: int, request):
     try:
         item = db.query(model.Review).filter(model.Review.id == item_id)
