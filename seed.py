@@ -6,9 +6,11 @@ customers, promotions, orders, payment records, and reviews so the API
 has data available for Swagger testing and the frontend demo.
 """
 
+import hashlib
 from datetime import datetime
+from sqlalchemy import text
 
-from api.dependencies.database import SessionLocal
+from api.dependencies.database import SessionLocal, engine
 from api.models.customer import Customer
 from api.models.orders import Order
 from api.models.payment_info import PaymentInfo
@@ -17,8 +19,26 @@ from api.models.resources import Resource
 from api.models.review import Review
 
 
+def hash_password(password: str) -> str:
+    return hashlib.sha256(password.encode()).hexdigest()
+
+
+def migrate_schema():
+    """Add any missing columns to existing tables."""
+    with engine.connect() as conn:
+        try:
+            conn.execute(text(
+                "ALTER TABLE customer ADD COLUMN is_staff BOOLEAN NOT NULL DEFAULT FALSE"
+            ))
+            conn.commit()
+            print("Added is_staff column to customer table.")
+        except Exception:
+            pass  # Column already exists
+
+
 def seed_database():
     """Reset and populate the database with demo data."""
+    migrate_schema()
     db = SessionLocal()
 
     try:
@@ -81,7 +101,8 @@ def seed_database():
                 email="alice.johnson@email.com",
                 phone_num="7045551001",
                 address="123 Main St",
-                password_hash="password123",
+                password_hash=hash_password("password123"),
+                is_staff=False,
             ),
             Customer(
                 order_num=1002,
@@ -89,7 +110,8 @@ def seed_database():
                 email="brian.lee@email.com",
                 phone_num="7045551002",
                 address="Pickup",
-                password_hash="password123",
+                password_hash=hash_password("password123"),
+                is_staff=False,
             ),
             Customer(
                 order_num=1003,
@@ -97,7 +119,17 @@ def seed_database():
                 email="carmen.ortiz@email.com",
                 phone_num="7045551003",
                 address="789 Pine Rd",
-                password_hash="password123",
+                password_hash=hash_password("password123"),
+                is_staff=False,
+            ),
+            Customer(
+                order_num=0,
+                customer_name="Staff Manager",
+                email="staff@restaurant.com",
+                phone_num="7045550000",
+                address="Restaurant HQ",
+                password_hash=hash_password("staffpass123"),
+                is_staff=True,
             ),
         ]
         db.add_all(customers)
@@ -221,7 +253,7 @@ def seed_database():
 
         print("Database seeded successfully.")
         print(f"Created {len(resources)} resources/menu items.")
-        print(f"Created {len(customers)} customers.")
+        print(f"Created {len(customers)} customers (including 1 staff account: staff@restaurant.com / staffpass123).")
         print(f"Created {len(promotions)} promotions.")
         print(f"Created {len(orders)} orders.")
         print(f"Created {len(payments)} payment records.")

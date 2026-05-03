@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Boolean, Column, Integer, String
 from sqlalchemy.orm import relationship
 from ..dependencies.database import Base
 
@@ -12,6 +12,7 @@ class Customer(Base):
     address = Column(String(200), nullable=False)
     order_num = Column(Integer, nullable=False)
     password_hash = Column(String(255), nullable=False)
+    is_staff = Column(Boolean, nullable=False, default=False)
 
     orders = relationship("Order", back_populates="customer")
     reviews = relationship("Review", back_populates="customer")
